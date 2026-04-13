@@ -1,27 +1,33 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
   createProjectService,
   getDirectoryTreeService,
 } from "../services/project";
+import { AppError } from "../utils/app-error";
 
-export const createProject = async (req: Request, res: Response) => {
+export const createProject = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const id = await createProjectService();
 
     return res.status(201).json({ message: "Project created", id });
   } catch (error) {
-    return res.status(500).json({ message: "Failed to create project" });
+    return next(error);
   }
 };
 
 export const getDirectoryTree = async (
   req: Request<{ projectId: string }>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   const { projectId } = req.params;
 
   if (!projectId) {
-    return res.status(400).json({ message: "Param 'projectId' is required" });
+    return next(new AppError("Param 'projectId' is required", 400));
   }
 
   try {
@@ -31,21 +37,6 @@ export const getDirectoryTree = async (
       tree,
     });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to fetch directory tree";
-
-    if (message === "Project not found") {
-      return res.status(404).json({ message });
-    }
-
-    if (
-      message === "Project id is required" ||
-      message === "Project path is not a directory" ||
-      message === "Invalid project id"
-    ) {
-      return res.status(400).json({ message });
-    }
-
-    return res.status(500).json({ message: "Failed to fetch directory tree" });
+    return next(error);
   }
 };

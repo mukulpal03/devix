@@ -4,15 +4,20 @@ import path from "path";
 import directoryTree from "directory-tree";
 import { REACT_PROJECT_COMMAND } from "../config/server";
 import { execAsync } from "../utils/exec";
+import { AppError } from "../utils/app-error";
 
 export const createProjectService = async (): Promise<string> => {
   const id = uuidv4();
   const projectPath = `projects/${id}`;
 
-  await fs.mkdir(projectPath);
-  await execAsync(REACT_PROJECT_COMMAND, {
-    cwd: projectPath,
-  });
+  try {
+    await fs.mkdir(projectPath);
+    await execAsync(REACT_PROJECT_COMMAND, {
+      cwd: projectPath,
+    });
+  } catch (error) {
+    throw new AppError("Failed to create project", 500);
+  }
 
   return id;
 };
@@ -31,24 +36,24 @@ export const getDirectoryTreeService = async (
 ): Promise<DirectoryNode> => {
   const trimmedProjectId = projectId.trim();
   if (!trimmedProjectId) {
-    throw new Error("Project id is required");
+    throw new AppError("Project id is required", 400);
   }
 
   const projectsRoot = path.resolve(process.cwd(), "projects");
   const resolvedPath = path.resolve(projectsRoot, trimmedProjectId);
 
   if (!resolvedPath.startsWith(projectsRoot)) {
-    throw new Error("Invalid project id");
+    throw new AppError("Invalid project id", 400);
   }
 
   const stats = await fs.stat(resolvedPath).catch(() => null);
 
   if (!stats) {
-    throw new Error("Project not found");
+    throw new AppError("Project not found", 404);
   }
 
   if (!stats.isDirectory()) {
-    throw new Error("Project path is not a directory");
+    throw new AppError("Project path is not a directory", 400);
   }
 
   const tree = directoryTree(resolvedPath, {
@@ -56,7 +61,7 @@ export const getDirectoryTreeService = async (
   }) as DirectoryNode | null;
 
   if (!tree) {
-    throw new Error("Unable to build directory tree");
+    throw new AppError("Unable to build directory tree", 500);
   }
 
   return tree;
