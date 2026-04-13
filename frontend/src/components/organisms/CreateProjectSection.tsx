@@ -1,23 +1,17 @@
-import { AxiosError } from 'axios'
 import { Alert } from '../ui/alert'
 import { CreateProjectCard } from '../molecules/CreateProjectCard'
-import { useCreateProjectMutation } from '../../hooks/mutations/useCreateProjectMutation'
-
-interface ApiErrorResponse {
-  message?: string
-}
+import { useCreateProject } from '../../hooks/useCreateProject'
 
 export const CreateProjectSection = () => {
-  const {
-    mutate,
-    data: projectResult,
-    error: projectError,
-    isPending,
-  } = useCreateProjectMutation()
+  const { createProject, isCreatingProject, projectResult, projectError } =
+    useCreateProject()
 
   return (
     <section className="mx-auto flex w-full max-w-xl flex-col gap-4">
-      <CreateProjectCard isLoading={isPending} onCreateProject={() => mutate()} />
+      <CreateProjectCard
+        isLoading={isCreatingProject}
+        onCreateProject={createProject}
+      />
 
       {projectResult ? (
         <Alert variant="success">
@@ -27,8 +21,7 @@ export const CreateProjectSection = () => {
 
       {projectError ? (
         <Alert variant="destructive">
-          {(projectError as AxiosError<ApiErrorResponse>).response?.data?.message ??
-            'Unable to create project. Please try again.'}
+          {projectError}
         </Alert>
       ) : null}
     </section>
