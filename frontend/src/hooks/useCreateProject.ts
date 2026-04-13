@@ -3,10 +3,11 @@ import { useCreateProjectMutation } from '../apis/mutations/useCreateProjectMuta
 export const useCreateProject = () => {
   const mutation = useCreateProjectMutation()
 
+  const createProject = mutation.mutateAsync
+
   return {
-    createProject: mutation.mutate,
+    createProject,
     isCreatingProject: mutation.isPending,
-    projectResult: mutation.data,
     projectError: mutation.error?.message ?? null,
   }
 }
