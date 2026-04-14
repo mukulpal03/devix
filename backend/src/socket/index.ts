@@ -10,10 +10,17 @@ export const initSocket = (server: HttpServer) => {
   });
 
   io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
+    const projectId = socket.handshake.query.projectId as string;
+    
+    if (projectId) {
+      console.log(`User ${socket.id} connected to project: ${projectId}`);
+      socket.join(projectId);
+    } else {
+      console.log(`User ${socket.id} connected without projectId`);
+    }
 
     socket.on("disconnect", () => {
-      console.log("user disconnected", socket.id);
+      console.log(`User ${socket.id} disconnected`);
     });
   });
 

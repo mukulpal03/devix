@@ -1,11 +1,14 @@
 import { RouterProvider } from 'react-router-dom'
 import { QueryProvider } from './app/providers/QueryProvider'
+import { SocketProvider } from './app/providers/SocketProvider'
 import { appRouter } from './app/router'
 
 function App() {
   return (
     <QueryProvider>
-      <RouterProvider router={appRouter} />
+      <SocketProvider>
+        <RouterProvider router={appRouter} />
+      </SocketProvider>
     </QueryProvider>
   )
 }

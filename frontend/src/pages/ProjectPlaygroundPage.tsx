@@ -1,12 +1,15 @@
-import { useParams } from 'react-router-dom'
-import { PlaygroundEditor } from '../components/organisms/PlaygroundEditor'
-import { FileTree } from '../components/organisms/FileTree'
-import { useDirectoryTreeQuery } from '../apis/queries/useDirectoryTreeQuery'
+import { useParams } from "react-router-dom";
+import { PlaygroundEditor } from "../components/organisms/PlaygroundEditor";
+import { FileTree } from "../components/organisms/FileTree";
+import { useDirectoryTreeQuery } from "../apis/queries/useDirectoryTreeQuery";
+import { useProjectSocket } from "../hooks/useSocket";
 
 export const ProjectPlaygroundPage = () => {
-  const { projectId } = useParams<{ projectId: string }>()
+  const { projectId } = useParams<{ projectId: string }>();
 
-  const { data, isLoading, isError } = useDirectoryTreeQuery(projectId ?? '')
+  const { isConnected } = useProjectSocket(projectId);
+
+  const { data, isLoading, isError } = useDirectoryTreeQuery(projectId ?? "");
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -19,11 +22,11 @@ export const ProjectPlaygroundPage = () => {
           <p className="px-3 py-2 text-xs text-muted-foreground">Loading...</p>
         )}
         {isError && (
-          <p className="px-3 py-2 text-xs text-destructive">Failed to load tree</p>
+          <p className="px-3 py-2 text-xs text-destructive">
+            Failed to load tree
+          </p>
         )}
-        {data?.tree && (
-          <FileTree root={data.tree} />
-        )}
+        {data?.tree && <FileTree root={data.tree} />}
       </aside>
 
       {/* Editor */}
@@ -31,5 +34,5 @@ export const ProjectPlaygroundPage = () => {
         <PlaygroundEditor />
       </main>
     </div>
-  )
-}
+  );
+};
