@@ -1,22 +1,25 @@
-import { apiClient } from './axios'
-import { AxiosError } from 'axios'
-import type { CreateProjectResponse, GetDirectoryTreeResponse } from '../types/project'
+import { apiClient } from "./axios";
+import { AxiosError } from "axios";
+import type {
+  CreateProjectResponse,
+  GetDirectoryTreeResponse,
+} from "../types/project";
 
 export const createProjectApi = async (): Promise<CreateProjectResponse> => {
   try {
-    const { data } = await apiClient.post<CreateProjectResponse>('/v1/project')
-    return data
+    const { data } = await apiClient.post<CreateProjectResponse>("/v1/project");
+    return data;
   } catch (error) {
     if (error instanceof AxiosError) {
       const serverMessage =
         (error.response?.data as { message?: string } | undefined)?.message ??
-        error.message
-      throw new Error(serverMessage)
+        error.message;
+      throw new Error(serverMessage);
     }
 
-    throw new Error('Failed to create project')
+    throw new Error("Failed to create project");
   }
-}
+};
 
 export const getDirectoryTreeApi = async (
   projectId: string,
@@ -24,17 +27,16 @@ export const getDirectoryTreeApi = async (
   try {
     const { data } = await apiClient.get<GetDirectoryTreeResponse>(
       `/v1/project/${projectId}/tree`,
-    )
-    return data
+    );
+    return data;
   } catch (error) {
     if (error instanceof AxiosError) {
       const serverMessage =
         (error.response?.data as { message?: string } | undefined)?.message ??
-        error.message
-      throw new Error(serverMessage)
+        error.message;
+      throw new Error(serverMessage);
     }
 
-    throw new Error('Failed to fetch directory tree')
+    throw new Error("Failed to fetch directory tree");
   }
-}
-
+};
