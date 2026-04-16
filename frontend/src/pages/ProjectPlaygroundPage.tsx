@@ -3,13 +3,20 @@ import { PlaygroundEditor } from "../components/organisms/PlaygroundEditor";
 import { FileTree } from "../components/organisms/FileTree";
 import { useDirectoryTreeQuery } from "../apis/queries/useDirectoryTreeQuery";
 import { useEditorSocket } from "../hooks/useEditorSocket";
+import type { DirectoryNode } from "../types/project";
 
 export const ProjectPlaygroundPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
 
-  const { isConnected } = useEditorSocket(projectId);
+  const { readFile } = useEditorSocket(projectId);
 
   const { data, isLoading, isError } = useDirectoryTreeQuery(projectId ?? "");
+
+  const handleFileClick = (node: DirectoryNode) => {
+    if (node.type === "file" || !node.children) {
+      readFile(node.path);
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -26,7 +33,9 @@ export const ProjectPlaygroundPage = () => {
             Failed to load tree
           </p>
         )}
-        {data?.tree && <FileTree root={data.tree} />}
+        {data?.tree && (
+          <FileTree root={data.tree} onFileClick={handleFileClick} />
+        )}
       </aside>
 
       {/* Editor */}

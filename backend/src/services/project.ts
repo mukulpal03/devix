@@ -63,10 +63,5 @@ export const getDirectoryTreeService = async (
     throw new AppError("Unable to build directory tree", 500);
   }
 
-  return stripPath(tree);
+  return tree;
 };
-
-const stripPath = ({ path: _path, children, ...rest }: DirectoryNode & { path?: string }): DirectoryNode => ({
-  ...rest,
-  ...(children && { children: children.map(stripPath) }),
-});

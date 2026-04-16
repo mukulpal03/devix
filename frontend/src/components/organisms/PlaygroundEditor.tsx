@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import Editor from "@monaco-editor/react";
 import { EditorTabs } from "../molecules/EditorTabs";
 import { useEditorTabsStore } from "../../store/editorTabsStore";
+import { getLanguageFromFileName } from "../../lib/file";
 import {
   Card,
   CardContent,
@@ -10,63 +11,54 @@ import {
   CardTitle,
 } from "../ui/card";
 
-const STARTER_FILES: Record<string, string> = {
-  "App.tsx": `export default function App() {
-  return <h1>Hello from playground</h1>
-}
-`,
-  "main.tsx": `import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App'
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
-`,
-};
-
 export const PlaygroundEditor = () => {
-  const { tabs, activeTabId, setTabs, setActiveTab } = useEditorTabsStore();
+  const { tabs, activeTabId, setActiveTab, closeTab } = useEditorTabsStore();
 
-  useEffect(() => {
-    setTabs(
-      Object.keys(STARTER_FILES).map((name) => ({ id: name, label: name }))
-    );
-  }, [setTabs]);
-
-  const activeCode = useMemo(
-    () => (activeTabId ? (STARTER_FILES[activeTabId] ?? "") : ""),
-    [activeTabId]
+  const activeTab = useMemo(
+    () => tabs.find((t) => t.id === activeTabId),
+    [tabs, activeTabId]
   );
 
+  const activeCode = activeTab?.content ?? "";
+  const activeLanguage = getLanguageFromFileName(activeTab?.label ?? "");
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Playground</CardTitle>
-        <CardDescription>
-          Basic Monaco editor setup with code-style tabs.
+    <Card className="w-full flex flex-col h-full overflow-hidden">
+      <CardHeader className="py-3 px-4">
+        <CardTitle className="text-lg">Playground</CardTitle>
+        <CardDescription className="text-xs">
+          Select a file from the explorer to view its contents.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="overflow-hidden rounded-md border">
-          <EditorTabs
-            tabs={tabs}
-            activeTabId={activeTabId}
-            onTabChange={setActiveTab}
-          />
-          <Editor
-            height="60vh"
-            language="typescript"
-            value={activeCode}
-            theme="vs-dark"
-            options={{
-              minimap: { enabled: false },
-              fontSize: 14,
-              scrollBeyondLastLine: false,
-            }}
-          />
+      <CardContent className="flex-1 p-0 flex flex-col overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden border-t">
+          {tabs.length > 0 ? (
+            <>
+              <EditorTabs
+                tabs={tabs}
+                activeTabId={activeTabId}
+                onTabChange={setActiveTab}
+                onTabClose={closeTab}
+              />
+              <div className="flex-1 w-full bg-[#1e1e1e]">
+                <Editor
+                  language={activeLanguage}
+                  value={activeCode}
+                  theme="vs-dark"
+                  options={{
+                    minimap: { enabled: false },
+                    fontSize: 14,
+                    scrollBeyondLastLine: false,
+                    automaticLayout: true,
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex h-full items-center justify-center text-sm text-muted-foreground bg-[#1e1e1e]">
+              No file open. Select a file from the explorer.
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
