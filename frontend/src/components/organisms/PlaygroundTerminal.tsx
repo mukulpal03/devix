@@ -2,8 +2,12 @@ import { useEffect, useRef } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { useShellSocket } from "../../hooks/useShellSocket";
+import { useParams } from "react-router-dom";
 
 export const PlaygroundTerminal = () => {
+  const { projectId } = useParams<{ projectId: string }>();
+  const { isConnected, sendData, onData } = useShellSocket(projectId);
   const terminalRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<Terminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -38,21 +42,17 @@ export const PlaygroundTerminal = () => {
 
     // Welcome message
     term.writeln("\x1b[1;32mWelcome to the Project Playground Terminal!\x1b[0m");
-    term.writeln("This is a UI-only preview. Backend connection is coming soon.");
+    term.writeln("Backend connection established.");
     term.write("\r\n$ ");
 
-    // Basic local echo for demo
+    // Pipe socket data to terminal
+    const removeSocketListener = onData((data) => {
+      term.write(data);
+    });
+
+    // Pipe terminal input to socket
     const onDataDisposable = term.onData((data) => {
-      // Basic handling for Enter, Backspace, and regular characters
-      if (data === "\r") {
-        term.write("\r\n$ ");
-      } else if (data === "\u007f") {
-        // Backspace
-        // This is a simple UI-only echo, so we don't handle complex line editing yet
-        term.write("\b \b");
-      } else {
-        term.write(data);
-      }
+      sendData(data);
     });
 
     // Handle window resize
@@ -65,6 +65,7 @@ export const PlaygroundTerminal = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
       onDataDisposable.dispose();
+      removeSocketListener();
       term.dispose();
       xtermRef.current = null;
       fitAddonRef.current = null;
@@ -75,8 +76,8 @@ export const PlaygroundTerminal = () => {
     <Card className="w-full flex flex-col h-full overflow-hidden bg-[#1e1e1e] border-none shadow-none">
       <CardHeader className="py-2 px-4 border-b border-white/10 bg-background/50">
         <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-500" />
-          Terminal
+          <div className={`w-2 h-2 rounded-full ${isConnected ? "bg-green-500" : "bg-red-500 animate-pulse"}`} />
+          Terminal {isConnected ? "" : "(Disconnected)"}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 p-0 overflow-hidden">
