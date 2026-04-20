@@ -39,8 +39,10 @@ export const ProjectPlaygroundPage = () => {
       </aside>
 
       {/* Editor */}
-      <main className="flex flex-1 flex-col overflow-hidden p-4">
-        <PlaygroundEditor />
+      <main className="flex flex-1 flex-col overflow-hidden p-4 gap-4 bg-muted/10">
+        <div className="flex-[2] overflow-hidden rounded-md border min-h-0 bg-background">
+          <PlaygroundEditor />
+        </div>
       </main>
     </div>
   );
