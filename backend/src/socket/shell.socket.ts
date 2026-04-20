@@ -1,6 +1,6 @@
 import { Socket, Namespace } from "socket.io";
 import { handleShellSocketEvents } from "./handlers/shell";
-import { DockerService } from "../services/docker.service";
+import { DockerService } from "../services/docker";
 
 export const handleShellNamespace = (namespace: Namespace) => {
   namespace.on("connection", (socket: Socket) => {
