@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { PlaygroundEditor } from "../components/organisms/PlaygroundEditor";
 import { FileTree } from "../components/organisms/FileTree";
+import { PlaygroundTerminal } from "../components/organisms/PlaygroundTerminal";
 import { useDirectoryTreeQuery } from "../apis/queries/useDirectoryTreeQuery";
 import { useEditorSocket } from "../hooks/useEditorSocket";
 import type { DirectoryNode } from "../types/project";
@@ -40,8 +41,11 @@ export const ProjectPlaygroundPage = () => {
 
       {/* Editor */}
       <main className="flex flex-1 flex-col overflow-hidden p-4 gap-4 bg-muted/10">
-        <div className="flex-[2] overflow-hidden rounded-md border min-h-0 bg-background">
+        <div className="flex-[3] overflow-hidden rounded-md border min-h-0 bg-background">
           <PlaygroundEditor />
+        </div>
+        <div className="flex-1 overflow-hidden rounded-md border min-h-0 bg-background">
+          <PlaygroundTerminal />
         </div>
       </main>
     </div>
