@@ -75,8 +75,24 @@ export class DockerService {
         Tty: true,
         OpenStdin: true,
         StdinOnce: false,
+        Env: [
+          "CHOKIDAR_USEPOLLING=true",
+          "WATCHPACK_POLLING=true"
+        ],
+        ExposedPorts: {
+          "3000/tcp": {},
+          "5173/tcp": {},
+          "8000/tcp": {},
+          "8080/tcp": {}
+        },
         HostConfig: {
           Binds: [`${hostProjectPath}:/home/sandbox/projects`],
+          PortBindings: {
+            "3000/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }],
+            "5173/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }],
+            "8000/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }],
+            "8080/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }]
+          }
         },
         WorkingDir: "/home/sandbox/projects",
       });
@@ -108,6 +124,33 @@ export class DockerService {
     });
 
     return stream;
+  }
+  
+  /**
+   * Retrieves mapped ports for the container
+   */
+  static async getContainerPorts(projectId: string) {
+    const containerName = `sandbox-${projectId}`;
+    const container = docker.getContainer(containerName);
+    
+    try {
+      const data = await container.inspect();
+      const ports = data.NetworkSettings.Ports;
+      const mappedPorts: Record<string, string> = {};
+      
+      if (ports) {
+        for (const [containerPort, hostBindings] of Object.entries(ports)) {
+          if (hostBindings && hostBindings.length > 0) {
+            const portStr = containerPort.split('/')[0];
+            mappedPorts[portStr] = hostBindings[0].HostPort;
+          }
+        }
+      }
+      return mappedPorts;
+    } catch (error) {
+      console.error(`Error inspecting container ports for ${containerName}:`, error);
+      return {};
+    }
   }
   
   static async stopContainer(projectId: string) {

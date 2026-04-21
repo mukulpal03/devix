@@ -1,15 +1,34 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Share2, Settings } from 'lucide-react'
+import { Share2, Settings, Play, Square, PanelRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { shellSocket } from '@/lib/socket'
 
 interface PlaygroundNavbarProps {
-  projectId: string
+  projectId: string;
+  isBrowserOpen: boolean;
+  toggleBrowser: () => void;
 }
 
-export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
-  const [status] = useState<'ready' | 'running'>('ready')
+export const PlaygroundNavbar = ({ projectId, isBrowserOpen, toggleBrowser }: PlaygroundNavbarProps) => {
+  const [status, setStatus] = useState<'ready' | 'running'>('ready')
+
+  const handleRun = () => {
+    if (shellSocket.connected) {
+      // Pass --host so Vite (and similar servers) bind to 0.0.0.0 inside the container,
+      // allowing Docker to route external traffic to it.
+      shellSocket.emit("terminalData", "npm run dev -- --host\r");
+      setStatus('running');
+    }
+  };
+
+  const handleStop = () => {
+    if (shellSocket.connected) {
+      shellSocket.emit("terminalData", "\x03"); // Ctrl+C
+      setStatus('ready');
+    }
+  };
 
   return (
     <header className="z-20 flex h-10 w-full shrink-0 items-center justify-between border-b border-white/7 bg-bg-primary px-3">
@@ -40,15 +59,25 @@ export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
 
       {/* Center — Run + Status */}
       <div className="flex items-center gap-2.5">
-        <Button
-          size="sm"
-          className="h-7 rounded-[4px] bg-accent px-3 text-[12px] font-medium text-white transition-opacity hover:opacity-90 border-none"
-        >
-          <svg width="8" height="9" viewBox="0 0 8 9" fill="none" className="mr-1.5">
-            <path d="M1 1L7 4.5L1 8V1Z" fill="white" />
-          </svg>
-          Run
-        </Button>
+        {status === 'ready' ? (
+          <Button
+            size="sm"
+            onClick={handleRun}
+            className="h-7 rounded-[4px] bg-accent px-3 text-[12px] font-medium text-white transition-opacity hover:opacity-90 border-none gap-1.5"
+          >
+            <Play size={12} fill="white" />
+            Run
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            onClick={handleStop}
+            className="h-7 rounded-[4px] bg-error/90 px-3 text-[12px] font-medium text-white transition-opacity hover:opacity-100 border-none gap-1.5"
+          >
+            <Square size={12} fill="white" />
+            Stop
+          </Button>
+        )}
 
         <div className="flex items-center gap-1.5 font-heading text-[11px]">
           <span
@@ -65,6 +94,18 @@ export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
 
       {/* Right — Share + Avatar + Settings */}
       <div className="flex items-center gap-2">
+        {/* Toggle Browser */}
+        <button
+          onClick={toggleBrowser}
+          title="Toggle Browser Preview"
+          className={cn(
+            "flex items-center p-1.5 rounded-md transition-colors",
+            isBrowserOpen ? "bg-white/10 text-text-primary" : "text-text-tertiary hover:bg-white/5 hover:text-text-primary"
+          )}
+        >
+          <PanelRight size={14} />
+        </button>
+
         {/* Share */}
         <Button
           variant="outline"

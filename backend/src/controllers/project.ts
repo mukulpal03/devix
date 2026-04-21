@@ -3,6 +3,7 @@ import {
   createProjectService,
   getDirectoryTreeService,
 } from "../services/project";
+import { DockerService } from "../services/docker";
 import { AppError } from "../utils/app-error";
 
 export const createProject = async (
@@ -35,6 +36,28 @@ export const getDirectoryTree = async (
     return res.status(200).json({
       message: "Directory tree fetched successfully",
       tree,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getProjectPorts = async (
+  req: Request<{ projectId: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { projectId } = req.params;
+
+  if (!projectId) {
+    return next(new AppError("Param 'projectId' is required", 400));
+  }
+
+  try {
+    const ports = await DockerService.getContainerPorts(projectId);
+    return res.status(200).json({
+      message: "Project ports fetched successfully",
+      ports,
     });
   } catch (error) {
     return next(error);

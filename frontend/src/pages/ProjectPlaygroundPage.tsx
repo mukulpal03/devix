@@ -3,13 +3,16 @@ import { PlaygroundEditor } from "@/features/editor/components/PlaygroundEditor"
 import { FileTree } from "@/features/editor/components/FileTree";
 import { PlaygroundTerminal } from "@/features/editor/components/PlaygroundTerminal";
 import { PlaygroundNavbar } from "@/features/editor/components/PlaygroundNavbar";
+import { BrowserPreview } from "@/features/editor/components/BrowserPreview";
 import { useDirectoryTreeQuery } from "@/apis/queries/useDirectoryTreeQuery";
 import { useEditorSocket } from "@/hooks/useEditorSocket";
 import type { DirectoryNode } from "@/types/project";
 import { FolderPlus, FilePlus } from "lucide-react";
+import { useState } from "react";
 
 export const ProjectPlaygroundPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
+  const [isBrowserOpen, setIsBrowserOpen] = useState(true);
 
   const { readFile } = useEditorSocket(projectId);
 
@@ -23,7 +26,11 @@ export const ProjectPlaygroundPage = () => {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-bg-editor font-sans text-text-primary selection:bg-accent/30 selection:text-white">
-      <PlaygroundNavbar projectId={projectId ?? ""} />
+      <PlaygroundNavbar 
+        projectId={projectId ?? ""} 
+        isBrowserOpen={isBrowserOpen} 
+        toggleBrowser={() => setIsBrowserOpen(!isBrowserOpen)} 
+      />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
@@ -69,9 +76,22 @@ export const ProjectPlaygroundPage = () => {
 
         {/* Editor Area */}
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
-          {/* Editor */}
-          <div className="flex-[3] flex min-h-0 overflow-hidden">
-            <PlaygroundEditor />
+          {/* Top Panel (Editor + Preview Split) */}
+          <div className="flex-[3] flex min-h-0 min-w-0 overflow-hidden w-full">
+            <div className="flex-1 flex min-w-0 overflow-hidden">
+              <PlaygroundEditor />
+            </div>
+            
+            {isBrowserOpen && (
+              <>
+                {/* Vertical Resize Handle (Visual Decor) */}
+                <div className="group w-[2px] h-full shrink-0 cursor-col-resize bg-white/4 transition-colors hover:bg-accent/40 z-10" />
+
+                <div className="flex-1 flex min-w-0 overflow-hidden border-l border-white/6">
+                  <BrowserPreview projectId={projectId ?? ""} />
+                </div>
+              </>
+            )}
           </div>
 
           {/* Resize handle (Visual Decor) */}

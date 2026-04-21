@@ -16,3 +16,9 @@ export interface GetDirectoryTreeResponse {
   message: string;
   tree: DirectoryNode;
 }
+
+export interface GetProjectPortsResponse {
+  message: string;
+  ports: Record<string, string>;
+  activePort?: string | null;
+}

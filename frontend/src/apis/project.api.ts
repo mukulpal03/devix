@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import type {
   CreateProjectResponse,
   GetDirectoryTreeResponse,
+  GetProjectPortsResponse,
 } from "../types/project";
 
 export const createProjectApi = async (): Promise<CreateProjectResponse> => {
@@ -38,5 +39,25 @@ export const getDirectoryTreeApi = async (
     }
 
     throw new Error("Failed to fetch directory tree");
+  }
+};
+
+export const getProjectPortsApi = async (
+  projectId: string,
+): Promise<GetProjectPortsResponse> => {
+  try {
+    const { data } = await apiClient.get<GetProjectPortsResponse>(
+      `/v1/project/${projectId}/ports`,
+    );
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const serverMessage =
+        (error.response?.data as { message?: string } | undefined)?.message ??
+        error.message;
+      throw new Error(serverMessage);
+    }
+
+    throw new Error("Failed to fetch project ports");
   }
 };
