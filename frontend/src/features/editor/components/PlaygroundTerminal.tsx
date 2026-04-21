@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
-import { useShellSocket } from "../../hooks/useShellSocket";
+import { useShellSocket } from "@/hooks/useShellSocket";
 import { useParams } from "react-router-dom";
 import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const PlaygroundTerminal = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -78,61 +79,18 @@ export const PlaygroundTerminal = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        overflow: 'hidden',
-        background: '#080809',
-      }}
-    >
+    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-deep">
       {/* Terminal tab bar */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '28px',
-          padding: '0 12px',
-          background: '#080809',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '0 8px',
-              height: '20px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '3px',
-            }}
-          >
+      <div className="flex h-7 shrink-0 items-center justify-between border-b border-white/5 bg-bg-deep px-3">
+        <div className="flex items-center gap-2">
+          <div className="flex h-5 items-center gap-1.5 rounded-[3px] border border-white/6 bg-white/4 px-2">
             <span
-              style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: isConnected ? '#2DD98F' : '#FF5757',
-                display: 'inline-block',
-                flexShrink: 0,
-              }}
-              className={!isConnected ? 'animate-pulse-dot' : undefined}
+              className={cn(
+                "h-1.5 w-1.5 rounded-full shrink-0",
+                isConnected ? "bg-success" : "animate-pulse bg-error"
+              )}
             />
-            <span
-              style={{
-                fontSize: '12px',
-                color: '#6E6D6A',
-                fontFamily: 'Geist, sans-serif',
-                letterSpacing: '0.02em',
-              }}
-            >
+            <span className="font-heading text-[12px] tracking-tight text-text-secondary">
               Terminal{!isConnected ? ' (Disconnected)' : ''}
             </span>
           </div>
@@ -141,26 +99,15 @@ export const PlaygroundTerminal = () => {
         {/* + new terminal */}
         <button
           title="New Terminal"
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#3E3D3B',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '2px',
-            transition: 'color 0.15s ease',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = '#F0EEE8' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = '#3E3D3B' }}
+          className="flex items-center rounded-sm p-0.5 text-text-tertiary transition-colors hover:text-text-primary hover:bg-white/5"
         >
           <Plus size={13} />
         </button>
       </div>
 
       {/* xterm content */}
-      <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-        <div ref={terminalRef} style={{ position: 'absolute', inset: 0, padding: '4px 8px' }} />
+      <div className="relative flex-1 overflow-hidden">
+        <div ref={terminalRef} className="absolute inset-0 p-1 px-2" />
       </div>
     </div>
   );

@@ -1,113 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap');
 @import "@xterm/xterm/css/xterm.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* ── Fonts ─────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap');
-
 @custom-variant dark (&:is(.dark *));
 
-/* ── Design Tokens ──────────────────────────────────── */
-:root {
-  /* Background */
-  --bg-primary:   #0A0A0B;
-  --bg-secondary: #111114;
-  --bg-elevated:  #18181C;
-  --bg-deep:      #080809;
-  --bg-editor:    #0E0E11;
+@theme {
+  /* ── Background ── */
+  --color-bg-primary:   #0A0A0B;
+  --color-bg-secondary: #111114;
+  --color-bg-elevated:  #18181C;
+  --color-bg-deep:      #080809;
+  --color-bg-editor:    #0E0E11;
 
-  /* Border */
-  --border-default: rgba(255,255,255,0.07);
-  --border-subtle:  rgba(255,255,255,0.04);
-  --border-accent:  rgba(255,255,255,0.15);
+  /* ── Border ── */
+  --color-border-default: rgba(255,255,255,0.07);
+  --color-border-subtle:  rgba(255,255,255,0.04);
+  --color-border-accent:  rgba(255,255,255,0.15);
 
-  /* Text */
-  --text-primary:   #F0EEE8;
-  --text-secondary: #6E6D6A;
-  --text-tertiary:  #3E3D3B;
+  /* ── Text ── */
+  --color-text-primary:   #F0EEE8;
+  --color-text-secondary: #6E6D6A;
+  --color-text-tertiary:  #3E3D3B;
 
-  /* Brand */
-  --accent:        #5B7FFF;
-  --accent-glow:   rgba(91,127,255,0.15);
-  --accent-bg:     rgba(91,127,255,0.1);
+  /* ── Brand ── */
+  --color-accent:        #5B7FFF;
+  --color-accent-glow:   rgba(91,127,255,0.15);
+  --color-accent-bg:     rgba(91,127,255,0.1);
 
-  /* Semantic */
-  --success:          #2DD98F;
-  --error:            #FF5757;
-  --warning:          #FFB547;
-  --terminal-green:   #3EFF9E;
+  /* ── Semantic ── */
+  --color-success:          #2DD98F;
+  --color-error:            #FF5757;
+  --color-warning:          #FFB547;
+  --color-terminal-green:   #3EFF9E;
 
-  /* Shadcn overrides — dark always */
-  --background:           var(--bg-primary);
-  --foreground:           var(--text-primary);
-  --card:                 var(--bg-secondary);
-  --card-foreground:      var(--text-primary);
-  --popover:              var(--bg-elevated);
-  --popover-foreground:   var(--text-primary);
-  --primary:              var(--accent);
-  --primary-foreground:   #ffffff;
-  --secondary:            var(--bg-elevated);
-  --secondary-foreground: var(--text-primary);
-  --muted:                var(--bg-elevated);
-  --muted-foreground:     var(--text-secondary);
-  --accent:               var(--bg-elevated);
-  --accent-foreground:    var(--text-primary);
-  --destructive:          var(--error);
-  --border:               var(--border-default);
-  --input:                var(--bg-elevated);
-  --ring:                 rgba(91,127,255,0.5);
-  --radius:               0.375rem;
-  --sidebar:              var(--bg-editor);
-  --sidebar-foreground:   var(--text-primary);
-  --sidebar-border:       var(--border-default);
-  --sidebar-primary:      var(--accent);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent:       var(--bg-elevated);
-  --sidebar-accent-foreground: var(--text-primary);
-  --sidebar-ring:         rgba(91,127,255,0.5);
-}
+  /* ── Shadcn / Standard Colors ── */
+  --color-background:           var(--color-bg-primary);
+  --color-foreground:           var(--color-text-primary);
+  --color-card:                 var(--color-bg-secondary);
+  --color-card-foreground:      var(--color-text-primary);
+  --color-popover:              var(--color-bg-elevated);
+  --color-popover-foreground:   var(--color-text-primary);
+  --color-primary:              var(--color-accent);
+  --color-primary-foreground:   #ffffff;
+  --color-secondary:            var(--color-bg-elevated);
+  --color-secondary-foreground: var(--color-text-primary);
+  --color-muted:                var(--color-bg-elevated);
+  --color-muted-foreground:     var(--color-text-secondary);
+  --color-destructive:          var(--color-error);
+  --color-border:               var(--color-border-default);
+  --color-input:                var(--color-bg-elevated);
+  --color-ring:                 rgba(91,127,255,0.5);
+  
+  --color-sidebar:                    var(--color-bg-editor);
+  --color-sidebar-foreground:         var(--color-text-primary);
+  --color-sidebar-border:             var(--color-border-default);
+  --color-sidebar-primary:            var(--color-accent);
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent:             var(--color-bg-elevated);
+  --color-sidebar-accent-foreground:  var(--color-text-primary);
+  --color-sidebar-ring:               rgba(91,127,255,0.5);
 
-@theme inline {
-  --color-background:          var(--background);
-  --color-foreground:          var(--foreground);
-  --color-card:                var(--card);
-  --color-card-foreground:     var(--card-foreground);
-  --color-primary:             #5B7FFF;
-  --color-primary-foreground:  #ffffff;
-  --color-secondary:           var(--secondary);
-  --color-secondary-foreground:var(--secondary-foreground);
-  --color-muted:               var(--muted);
-  --color-muted-foreground:    var(--muted-foreground);
-  --color-border:              var(--border);
-  --color-destructive:         var(--destructive);
-  --color-ring:                var(--ring);
-  --color-input:               var(--input);
-  --color-accent:              #5B7FFF;
-  --color-accent-foreground:   #ffffff;
-  --color-popover:             var(--popover);
-  --color-popover-foreground:  var(--popover-foreground);
-
+  /* ── Typography ── */
   --font-sans:    'Geist', 'IBM Plex Mono', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
   --font-display: 'Instrument Serif', 'Fraunces', Georgia, serif;
   --font-heading: 'Geist', system-ui, sans-serif;
 
+  /* ── Radius ── */
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 6px;
   --radius-xl: 8px;
-
-  --color-sidebar-ring:               var(--sidebar-ring);
-  --color-sidebar-border:             var(--sidebar-border);
-  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
-  --color-sidebar-accent:             var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary:            var(--sidebar-primary);
-  --color-sidebar-foreground:         var(--sidebar-foreground);
-  --color-sidebar:                    var(--sidebar);
 }
 
 /* ── Base ───────────────────────────────────────────── */

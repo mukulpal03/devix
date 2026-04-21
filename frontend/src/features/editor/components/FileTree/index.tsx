@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { FileTreeNode } from '../molecules/FileTreeNode'
-import type { DirectoryNode } from '../../types/project'
+import { FileTreeNode } from './FileTreeNode'
+import type { DirectoryNode } from '@/types/project'
 import { FileTreeDialogs } from './FileTreeDialogs'
-import { useFileTreeDialogs } from '../../hooks/useFileTreeDialogs'
+import { useFileTreeDialogs } from '@/hooks/useFileTreeDialogs'
 
 interface FileTreeProps {
   root: DirectoryNode
@@ -28,8 +28,8 @@ export const FileTree = ({ root, onFileClick }: FileTreeProps) => {
     setOpenFolders((prev) => ({ ...prev, [nodePath]: !prev[nodePath] }))
 
   return (
-    <>
-      <div className="h-full overflow-y-auto py-2 text-sm">
+    <div className="flex h-full flex-col overflow-hidden">
+      <div className="flex-1 overflow-y-auto pt-2 pb-8 scrollbar-hide">
         {root.children?.map((node) => (
           <FileTreeNode
             key={node.name}
@@ -58,6 +58,6 @@ export const FileTree = ({ root, onFileClick }: FileTreeProps) => {
         handleDialogSubmit={handleDialogSubmit}
         handleDeleteSubmit={handleDeleteSubmit}
       />
-    </>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import type { DirectoryNode } from '../types/project'
-import type { DialogType } from '../components/organisms/FileTreeDialogs'
+import type { DialogType } from '@/features/editor/components/FileTree/FileTreeDialogs'
 import { editorSocket } from '../lib/socket'
 
 export const useFileTreeDialogs = () => {

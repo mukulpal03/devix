@@ -1,21 +1,14 @@
-import { LandingNavbar } from "../components/organisms/LandingNavbar";
-import { LandingHero } from "../components/organisms/LandingHero";
-import { LandingFeatures } from "../components/organisms/LandingFeatures";
-import { LandingHowItWorks } from "../components/organisms/LandingHowItWorks";
-import { LandingTestimonials } from "../components/organisms/LandingTestimonials";
-import { LandingPricing } from "../components/organisms/LandingPricing";
-import { LandingBottomCta } from "../components/organisms/LandingBottomCta";
-import { LandingFooter } from "../components/organisms/LandingFooter";
+import { LandingNavbar } from "@/features/landing/components/LandingNavbar";
+import { LandingHero } from "@/features/landing/components/LandingHero";
+import { LandingFeatures } from "@/features/landing/components/LandingFeatures";
+import { LandingHowItWorks } from "@/features/landing/components/LandingHowItWorks";
+import { LandingTestimonials } from "@/features/landing/components/LandingTestimonials";
+import { LandingPricing } from "@/features/landing/components/LandingPricing";
+import { LandingBottomCta } from "@/features/landing/components/LandingBottomCta";
+import { LandingFooter } from "@/features/landing/components/LandingFooter";
 
 export const HomePage = () => (
-  <div
-    style={{
-      minHeight: "100vh",
-      background: "#0A0A0B",
-      color: "#F0EEE8",
-      fontFamily: "Geist, system-ui, sans-serif",
-    }}
-  >
+  <div className="min-h-screen bg-bg-primary text-text-primary font-sans selection:bg-accent/30 selection:text-white">
     <LandingNavbar />
     <main>
       <LandingHero />
