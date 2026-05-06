@@ -1,0 +1,41 @@
+name: Publish Sandbox Image
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'backend/Dockerfile'
+      - 'backend/**' # Re-build if any backend code changes, as it might affect the sandbox logic
+
+jobs:
+  push_to_registry:
+    name: Build and Push to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # Uses the image name from secrets, or defaults to the one you just used
+          images: ${{ secrets.DOCKER_IMAGE_NAME || 'mukul033/devix-sandbox' }}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
