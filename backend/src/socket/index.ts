@@ -2,6 +2,7 @@ import { Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import { handleEditorNamespace } from "./editor.socket";
 import { handleShellNamespace } from "./shell.socket";
+import { WatcherReaper } from "./watcher-reaper";
 
 export const initSocket = (server: HttpServer) => {
   const io = new SocketServer(server, {
@@ -21,6 +22,7 @@ export const initSocket = (server: HttpServer) => {
 
   const editorNamespace = io.of("/editor");
   handleEditorNamespace(editorNamespace);
+  WatcherReaper.start(editorNamespace);
 
   const shellNamespace = io.of("/shell");
   handleShellNamespace(shellNamespace);
