@@ -10,7 +10,6 @@ initSocket(server);
 
 (async () => {
   await DockerService.ensureNetwork();
-  DockerService.startIdleReaper();
 })();
 
 server.listen(PORT, () => {

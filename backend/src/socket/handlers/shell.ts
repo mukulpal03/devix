@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import { createSocketHandler } from "../utils";
-import { DockerService } from "../../services/docker";
 
 export const handleShellSocketEvents = (
   socket: Socket,
@@ -18,7 +17,6 @@ export const handleShellSocketEvents = (
     handleEvent<string>(
       "terminalData",
       async (data: string) => {
-        DockerService.recordActivity(projectId);
         stream.write(data);
       },
       { rateLimit: { max: 50, windowMs: 1000 } },

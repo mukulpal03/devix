@@ -1,12 +1,10 @@
 import Docker from "dockerode";
 import path from "path";
 import fs from "fs/promises";
-import { IMAGE_NAME, SANDBOX_NETWORK, IDLE_TIMEOUT_MS, REAPER_INTERVAL_MS } from "../config/docker";
+import { IMAGE_NAME, SANDBOX_NETWORK } from "../config/docker";
 
 const docker = new Docker();
 
-// Tracks last terminal activity per projectId for the idle reaper.
-const containerActivity = new Map<string, number>();
 
 export class DockerService {
   static async ensureImage() {
@@ -50,26 +48,6 @@ export class DockerService {
       });
       console.log(`Network ${SANDBOX_NETWORK} created.`);
     }
-  }
-
-  // Kills idle containers that haven't had terminal activity within IDLE_TIMEOUT_MS.
-  static startIdleReaper() {
-    const id = setInterval(async () => {
-      const now = Date.now();
-      for (const [projectId, lastActivity] of containerActivity.entries()) {
-        if (now - lastActivity > IDLE_TIMEOUT_MS) {
-          console.log(`[Reaper] Stopping idle container: ${projectId}`);
-          await DockerService.stopAndRemoveContainer(projectId);
-        }
-      }
-    }, REAPER_INTERVAL_MS);
-
-    id.unref();
-    console.log(`[Reaper] Started. Idle timeout: ${IDLE_TIMEOUT_MS / 60000}min.`);
-  }
-
-  static recordActivity(projectId: string) {
-    containerActivity.set(projectId, Date.now());
   }
 
   static async getOrCreateContainer(projectId: string) {
@@ -134,7 +112,6 @@ export class DockerService {
       await container.start();
     }
 
-    containerActivity.set(projectId, Date.now());
     return container;
   }
 
@@ -234,6 +211,5 @@ export class DockerService {
   static async stopAndRemoveContainer(projectId: string) {
     await DockerService.stopContainer(projectId);
     await DockerService.removeContainer(projectId);
-    containerActivity.delete(projectId);
   }
 }

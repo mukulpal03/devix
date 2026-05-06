@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 
 /**
- * Creates a higher-order function to handle socket events with common validation, 
+ * Creates a higher-order function to handle socket events with common validation,
  * error handling, and optional rate limiting.
  * @param socket The socket instance to emit errors to.
  * @param projectId The project ID for validation.
@@ -14,7 +14,7 @@ export const createSocketHandler = (socket: Socket, projectId?: string) => {
   return <T>(
     eventName: string,
     handler: (payload: T) => Promise<void>,
-    options: { rateLimit?: { max: number; windowMs: number } } = {}
+    options: { rateLimit?: { max: number; windowMs: number } } = {},
   ) => {
     return async (payload: T) => {
       try {
@@ -23,7 +23,10 @@ export const createSocketHandler = (socket: Socket, projectId?: string) => {
         // Rate limiting check
         if (options.rateLimit) {
           const now = Date.now();
-          const stats = eventCounts.get(eventName) || { count: 0, lastReset: now };
+          const stats = eventCounts.get(eventName) || {
+            count: 0,
+            lastReset: now,
+          };
 
           if (now - stats.lastReset > options.rateLimit.windowMs) {
             stats.count = 1;
@@ -37,7 +40,7 @@ export const createSocketHandler = (socket: Socket, projectId?: string) => {
           if (stats.count > options.rateLimit.max) {
             socket.emit(`${eventName}Error`, {
               message: `Rate limit exceeded for ${eventName}. Maximum ${options.rateLimit.max} events per ${options.rateLimit.windowMs / 1000}s allowed.`,
-              code: "RATE_LIMIT_EXCEEDED"
+              code: "RATE_LIMIT_EXCEEDED",
             });
             return;
           }
@@ -48,7 +51,7 @@ export const createSocketHandler = (socket: Socket, projectId?: string) => {
         console.error(`Error during ${eventName}:`, error);
         socket.emit(`${eventName}Error`, {
           message: error.message || "An error occurred",
-          code: error.code || "UNKNOWN_ERROR"
+          code: error.code || "UNKNOWN_ERROR",
         });
       }
     };
