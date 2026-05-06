@@ -11,6 +11,7 @@ initSocket(server);
 
 (async () => {
   await DockerService.ensureNetwork();
+  await DockerService.ensureImage();
   IdleContainerReaper.start();
 })();
 

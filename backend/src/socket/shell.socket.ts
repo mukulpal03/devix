@@ -17,7 +17,6 @@ export const handleShellNamespace = (namespace: Namespace) => {
 
       (async () => {
         try {
-          await DockerService.ensureImage();
           const container = await DockerService.getOrCreateContainer(projectId);
           const stream = await DockerService.createShellStream(container.id);
           handleShellSocketEvents(socket, stream, projectId);

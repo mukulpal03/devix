@@ -12,22 +12,22 @@ export class DockerService {
       await docker.getImage(IMAGE_NAME).inspect();
       console.log(`Image ${IMAGE_NAME} already exists.`);
     } catch (error) {
-      console.log(`Image ${IMAGE_NAME} not found. Building...`);
-      const contextPath = process.cwd();
+      console.log(`Image ${IMAGE_NAME} not found locally. Pulling from registry...`);
 
-      const stream = await docker.buildImage(
-        { context: contextPath, src: ["Dockerfile"] },
-        { t: IMAGE_NAME },
-      );
+      const stream = await docker.pull(IMAGE_NAME);
 
       await new Promise((resolve, reject) => {
         docker.modem.followProgress(
           stream,
           (err, res) => (err ? reject(err) : resolve(res)),
-          (event) => { if (event.stream) process.stdout.write(event.stream); },
+          (event) => {
+            if (event.status) {
+              process.stdout.write(`[Docker Pull] ${event.status} ${event.progress || ""}\r`);
+            }
+          },
         );
       });
-      console.log(`Image ${IMAGE_NAME} built successfully.`);
+      console.log(`\nImage ${IMAGE_NAME} pulled successfully.`);
     }
   }
 
