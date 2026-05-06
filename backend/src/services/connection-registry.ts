@@ -63,4 +63,9 @@ export const ConnectionRegistry = {
   getCount(projectId: string): number {
     return shellConnections.get(projectId) ?? 0;
   },
+
+  /** Returns the total number of projects currently tracked in the registry. */
+  getActiveProjectCount(): number {
+    return shellConnections.size;
+  },
 };

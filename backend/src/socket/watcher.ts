@@ -121,5 +121,10 @@ export const ProjectWatcherService = {
         await ProjectWatcherService.forceStopWatcher(projectId);
       }
     }
-  }
+  },
+
+  /** Returns the total number of active file watchers. */
+  getWatcherCount: () => {
+    return projectWatchers.size;
+  },
 };

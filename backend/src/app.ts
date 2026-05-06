@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import apiRouter from "./routes";
+import healthRouter from "./routes/health";
 import {
   globalErrorHandler,
   notFoundHandler,
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api", globalApiLimiter, apiRouter);
+app.use("/health", healthRouter);
 
 app.get("/ping", (_, res) => {
   res.json({ message: "pong" });
