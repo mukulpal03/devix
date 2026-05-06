@@ -36,10 +36,7 @@ export const handleShellNamespace = (namespace: Namespace) => {
     socket.on("disconnect", () => {
       console.log("User disconnected from shell", socket.id);
       if (projectId) {
-        const isLastConnection = ConnectionRegistry.disconnect(projectId);
-        if (isLastConnection) {
-          DockerService.stopAndRemoveContainer(projectId);
-        }
+        ConnectionRegistry.disconnect(projectId);
       }
     });
   });
