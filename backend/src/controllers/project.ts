@@ -7,12 +7,13 @@ import { DockerService } from "../services/docker";
 import { AppError } from "../utils/app-error";
 
 export const createProject = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const id = await createProjectService();
+    const { name } = req.body;
+    const id = await createProjectService(name);
 
     return res.status(201).json({ message: "Project created", id });
   } catch (error) {
