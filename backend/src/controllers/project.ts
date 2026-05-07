@@ -12,10 +12,11 @@ export const createProject = async (
   next: NextFunction
 ) => {
   try {
-    const { name } = req.body;
-    const id = await createProjectService(name);
+    const { id, name: projectName } = await createProjectService();
 
-    return res.status(201).json({ message: "Project created", id });
+    return res
+      .status(201)
+      .json({ message: "Project created", id, name: projectName });
   } catch (error) {
     return next(error);
   }

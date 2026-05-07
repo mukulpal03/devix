@@ -6,9 +6,13 @@ import { REACT_PROJECT_COMMAND } from "../config/server";
 import { AppError } from "../utils/app-error";
 import { DockerService } from "./docker";
 import prisma from "../libs/db";
+import { generateRandomName } from "../utils/random-name";
 
-export const createProjectService = async (name?: string): Promise<string> => {
-  const projectName = name || "Untitled Project";
+export const createProjectService = async (): Promise<{
+  id: string;
+  name: string;
+}> => {
+  const projectName = generateRandomName();
   const ownerId = uuidv4();
 
   const project = await prisma.project.create({
@@ -26,7 +30,7 @@ export const createProjectService = async (name?: string): Promise<string> => {
     await fs.mkdir(projectPath, { recursive: true });
     await DockerService.scaffoldProject(id, REACT_PROJECT_COMMAND);
 
-    return id;
+    return { id, name: projectName };
   } catch (error) {
     await fs.rm(projectPath, { recursive: true, force: true }).catch(() => {});
     await DockerService.stopAndRemoveContainer(id).catch(() => {});
