@@ -5,14 +5,15 @@ import { IMAGE_NAME, SANDBOX_NETWORK } from "../config/docker";
 
 const docker = new Docker();
 
-
 export class DockerService {
   static async ensureImage() {
     try {
       await docker.getImage(IMAGE_NAME).inspect();
       console.log(`Image ${IMAGE_NAME} already exists.`);
     } catch (error) {
-      console.log(`Image ${IMAGE_NAME} not found locally. Pulling from registry...`);
+      console.log(
+        `Image ${IMAGE_NAME} not found locally. Pulling from registry...`,
+      );
 
       const stream = await docker.pull(IMAGE_NAME);
 
@@ -22,7 +23,9 @@ export class DockerService {
           (err, res) => (err ? reject(err) : resolve(res)),
           (event) => {
             if (event.status) {
-              process.stdout.write(`[Docker Pull] ${event.status} ${event.progress || ""}\r`);
+              process.stdout.write(
+                `[Docker Pull] ${event.status} ${event.progress || ""}\r`,
+              );
             }
           },
         );
@@ -62,7 +65,11 @@ export class DockerService {
     } catch (error) {
       console.log(`Container ${containerName} not found. Creating...`);
 
-      const hostProjectPath = path.resolve(process.cwd(), "projects", projectId);
+      const hostProjectPath = path.resolve(
+        process.cwd(),
+        "projects",
+        projectId,
+      );
 
       try {
         await fs.access(hostProjectPath);
@@ -103,7 +110,11 @@ export class DockerService {
           SecurityOpt: ["no-new-privileges:true"],
           // Read-only OS filesystem; project volume stays writable
           ReadonlyRootfs: true,
-          Tmpfs: { "/tmp": "rw,noexec,nosuid,size=100m" },
+          Tmpfs: { 
+            "/tmp": "rw,noexec,nosuid,size=100m",
+            "/home/sandbox/.npm": "rw,exec,size=200m",
+            "/home/sandbox/.config": "rw,size=10m"
+          },
           Privileged: false,
         },
         WorkingDir: "/home/sandbox/projects",
@@ -117,7 +128,10 @@ export class DockerService {
 
   // Runs the scaffold command inside the container and waits for it to finish.
   // Uses /bin/sh so the full command string (flags, args) is handled correctly.
-  static async scaffoldProject(projectId: string, command: string): Promise<void> {
+  static async scaffoldProject(
+    projectId: string,
+    command: string,
+  ): Promise<void> {
     const container = await DockerService.getOrCreateContainer(projectId);
 
     const exec = await docker.getContainer(container.id).exec({
@@ -131,11 +145,31 @@ export class DockerService {
     const stream = await exec.start({ hijack: true, stdin: false });
 
     await new Promise<void>((resolve, reject) => {
+      let output = "";
+
+      docker.modem.demuxStream(
+        stream,
+        {
+          write: (chunk: Buffer) => {
+            output += chunk.toString();
+          },
+        } as any,
+        {
+          write: (chunk: Buffer) => {
+            output += chunk.toString();
+          },
+        } as any,
+      );
+
       stream.on("end", async () => {
         try {
           const info = await exec.inspect();
           if (info.ExitCode !== 0) {
-            reject(new Error(`Scaffold command exited with code ${info.ExitCode}`));
+            reject(
+              new Error(
+                `Scaffold command exited with code ${info.ExitCode}\nOutput: ${output}`,
+              ),
+            );
           } else {
             resolve();
           }
@@ -181,7 +215,10 @@ export class DockerService {
       }
       return mappedPorts;
     } catch (error) {
-      console.error(`Error inspecting container ports for ${containerName}:`, error);
+      console.error(
+        `Error inspecting container ports for ${containerName}:`,
+        error,
+      );
       return {};
     }
   }
