@@ -4,3 +4,4 @@ projects/
 
 # Internal security documentation
 security.md
+/src/generated/prisma
