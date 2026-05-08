@@ -5,6 +5,7 @@ import directoryTree from "directory-tree";
 import { REACT_PROJECT_COMMAND } from "../config/server";
 import { AppError } from "../utils/app-error";
 import { DockerService } from "./docker";
+import { StorageService } from "./storage";
 import prisma from "../libs/db";
 import { generateRandomName } from "../utils/random-name";
 
@@ -14,29 +15,42 @@ export const createProjectService = async (): Promise<{
 }> => {
   const projectName = generateRandomName();
   const ownerId = uuidv4();
-
-  const project = await prisma.project.create({
-    data: {
-      name: projectName,
-      ownerId,
-      projectPath: `s3://placeholder/${uuidv4()}`,
-    },
-  });
-
-  const id = project.id;
-  const projectPath = path.resolve(process.cwd(), "projects", id);
+  let projectId: string | undefined;
+  let projectPath: string | undefined;
 
   try {
+    const project = await prisma.project.create({
+      data: {
+        name: projectName,
+        ownerId,
+        projectPath: `s3://placeholder/${uuidv4()}`,
+      },
+    });
+
+    projectId = project.id;
+    projectPath = path.resolve(process.cwd(), "projects", projectId);
+
     await fs.mkdir(projectPath, { recursive: true });
-    await DockerService.scaffoldProject(id, REACT_PROJECT_COMMAND);
+    await DockerService.scaffoldProject(projectId, REACT_PROJECT_COMMAND);
 
-    return { id, name: projectName };
+    console.log(`Syncing scaffolded project ${projectId} to blob storage...`);
+    await StorageService.uploadProject(projectId, projectPath);
+
+    return { id: projectId, name: projectName };
   } catch (error) {
-    await fs.rm(projectPath, { recursive: true, force: true }).catch(() => {});
-    await DockerService.stopAndRemoveContainer(id).catch(() => {});
-    await prisma.project.delete({ where: { id } }).catch(() => {});
+    console.log("error while creating project", error);
 
-    console.error(`Failed to create project ${id}:`, error);
+    if (projectPath) {
+      await fs
+        .rm(projectPath, { recursive: true, force: true })
+        .catch(() => {});
+    }
+    if (projectId) {
+      await DockerService.stopAndRemoveContainer(projectId).catch(() => {});
+      await prisma.project.delete({ where: { id: projectId } }).catch(() => {});
+    }
+
+    console.error(`Failed to create project ${projectId || "unknown"}:`, error);
     throw new AppError("Failed to create project", 500);
   }
 };

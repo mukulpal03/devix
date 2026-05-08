@@ -1,5 +1,8 @@
 import { ConnectionRegistry } from "./connection-registry";
 import { DockerService } from "./docker";
+import { StorageService } from "./storage";
+import path from "path";
+import fs from "fs/promises";
 import { CONTAINER_GRACE_PERIOD_MS, REAPER_INTERVAL_MS } from "../config/docker";
 
 /**
@@ -39,9 +42,24 @@ export class IdleContainerReaper {
           if (ConnectionRegistry.getCount(projectId) === 0) {
             console.log(`[Reaper] Grace period expired for "${projectId}". Stopping container...`);
             
+            // 2. Sync to Blob Storage
+            const projectPath = path.resolve(process.cwd(), "projects", projectId);
+            try {
+              console.log(`Syncing project ${projectId} to blob storage before cleanup...`);
+              await StorageService.uploadProject(projectId, projectPath);
+            } catch (syncError) {
+              console.error(`Failed to sync project ${projectId} to storage during reaping:`, syncError);
+              // We might want to NOT delete local files if sync fails, 
+              // but for now, we'll log and continue to avoid leaking disk space.
+            }
+
+            // 3. Stop and remove container
             await DockerService.stopAndRemoveContainer(projectId);
-            
-            // Final cleanup of the registry entry
+
+            // 4. Delete local files
+            await fs.rm(projectPath, { recursive: true, force: true }).catch(() => {});
+
+            // 5. Remove from registry
             ConnectionRegistry.cleanup(projectId);
           } else {
             console.log(`[Reaper] Aborting reaper for "${projectId}" - user reconnected.`);

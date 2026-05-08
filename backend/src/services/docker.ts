@@ -2,6 +2,7 @@ import Docker from "dockerode";
 import path from "path";
 import fs from "fs/promises";
 import { IMAGE_NAME, SANDBOX_NETWORK } from "../config/docker";
+import { StorageService } from "./storage";
 
 const docker = new Docker();
 
@@ -74,7 +75,16 @@ export class DockerService {
       try {
         await fs.access(hostProjectPath);
       } catch {
+        console.log(`Project files for ${projectId} missing locally. Pulling from blob storage...`);
         await fs.mkdir(hostProjectPath, { recursive: true });
+        try {
+          await StorageService.downloadProject(projectId, hostProjectPath);
+        } catch (downloadError) {
+          console.error(`Failed to download project ${projectId} from storage:`, downloadError);
+          // If download fails, we should probably cleanup the partial directory
+          await fs.rm(hostProjectPath, { recursive: true, force: true }).catch(() => {});
+          throw downloadError;
+        }
       }
 
       container = await docker.createContainer({

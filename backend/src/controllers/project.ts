@@ -12,6 +12,8 @@ export const createProject = async (
   next: NextFunction
 ) => {
   try {
+    console.log("call project service");
+    
     const { id, name: projectName } = await createProjectService();
 
     return res

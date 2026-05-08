@@ -6,15 +6,18 @@ import { DockerService } from "./services/docker";
 import { IdleContainerReaper } from "./services/reaper";
 import { WatcherReaper } from "./socket/watcher-reaper";
 
-// Global Error Handlers - Prevents the server from crashing on unhandled promise rejections
-// or unexpected exceptions that occur outside of request contexts.
 process.on("uncaughtException", (err) => {
   console.error("[CRITICAL] Uncaught Exception:", err);
   process.exit(1);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("[CRITICAL] Unhandled Rejection at:", promise, "reason:", reason);
+  console.error(
+    "[CRITICAL] Unhandled Rejection at:",
+    promise,
+    "reason:",
+    reason,
+  );
   process.exit(1);
 });
 
@@ -37,7 +40,9 @@ const gracefulShutdown = () => {
 
   // Force exit after 5 seconds to prevent hanging
   const timeout = setTimeout(() => {
-    console.error("Could not close connections in time, forcefully shutting down");
+    console.error(
+      "Could not close connections in time, forcefully shutting down",
+    );
     process.exit(1);
   }, 5000);
 
