@@ -8,27 +8,31 @@ import { DockerService } from "./docker";
 import { StorageService } from "./storage";
 import prisma from "../libs/db";
 import { generateRandomName } from "../utils/random-name";
+import { STORAGE_TYPE, S3_CONFIG } from "../config/storage";
 
 export const createProjectService = async (): Promise<{
   id: string;
   name: string;
 }> => {
+  const projectId = uuidv4();
   const projectName = generateRandomName();
   const ownerId = uuidv4();
-  let projectId: string | undefined;
-  let projectPath: string | undefined;
+  const projectPath = path.resolve(process.cwd(), "projects", projectId);
+
+  const finalProjectPath =
+    STORAGE_TYPE.toUpperCase() === "S3"
+      ? `https://${S3_CONFIG.bucket}.s3.${S3_CONFIG.region}.amazonaws.com/${projectId}`
+      : projectPath;
 
   try {
-    const project = await prisma.project.create({
+    await prisma.project.create({
       data: {
+        id: projectId,
         name: projectName,
         ownerId,
-        projectPath: `s3://placeholder/${uuidv4()}`,
+        projectPath: finalProjectPath,
       },
     });
-
-    projectId = project.id;
-    projectPath = path.resolve(process.cwd(), "projects", projectId);
 
     await fs.mkdir(projectPath, { recursive: true });
     await DockerService.scaffoldProject(projectId, REACT_PROJECT_COMMAND);
