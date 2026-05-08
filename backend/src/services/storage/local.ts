@@ -37,7 +37,13 @@ export class LocalStorageProvider implements StorageProvider {
     const remotePath = this.getRemotePath(projectId);
     await fs.mkdir(path.dirname(remotePath), { recursive: true });
 
-    await fs.cp(localPath, remotePath, { recursive: true });
+    await fs.cp(localPath, remotePath, { 
+      recursive: true,
+      filter: (source) => {
+        const basename = path.basename(source);
+        return basename !== "node_modules" && basename !== ".git";
+      }
+    });
   }
 
   async downloadDirectory(projectId: string, localPath: string): Promise<void> {

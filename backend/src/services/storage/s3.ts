@@ -178,8 +178,12 @@ export class S3Provider implements StorageProvider {
   ): Promise<string[]> {
     const files = await fs.readdir(dirPath);
     for (const file of files) {
+      if (file === "node_modules" || file === ".git") continue;
+      
       const name = path.join(dirPath, file);
-      const stat = await fs.stat(name);
+      const stat = await fs.stat(name).catch(() => null);
+      if (!stat) continue;
+      
       if (stat.isDirectory()) {
         await this.getAllFiles(name, fileList);
       } else {
