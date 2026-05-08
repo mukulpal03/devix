@@ -4,6 +4,7 @@ import { useShellSocketStore } from "../store/shellSocketStore";
 
 export const useShellSocket = (projectId: string | undefined) => {
   const isConnected = useShellSocketStore((s) => s.isConnected);
+  const reconnectCount = useShellSocketStore((s) => s.reconnectCount);
   const connect = useShellSocketStore((s) => s.connect);
   const disconnect = useShellSocketStore((s) => s.disconnect);
 
@@ -30,5 +31,5 @@ export const useShellSocket = (projectId: string | undefined) => {
     };
   }, []);
 
-  return { isConnected, sendData, onData };
+  return { isConnected, reconnectCount, sendData, onData };
 };

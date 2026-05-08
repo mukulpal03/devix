@@ -8,10 +8,23 @@ import { cn } from "@/lib/utils";
 
 export const PlaygroundTerminal = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const { isConnected, sendData, onData } = useShellSocket(projectId);
+  const { isConnected, reconnectCount, sendData, onData } =
+    useShellSocket(projectId);
   const terminalRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<Terminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
+  const lastReconnectCount = useRef(reconnectCount);
+
+  useEffect(() => {
+    if (reconnectCount > lastReconnectCount.current) {
+      if (xtermRef.current) {
+        xtermRef.current.write(
+          "\r\n\x1b[33m--- Reconnected to server (New Session) ---\x1b[0m\r\n",
+        );
+      }
+      lastReconnectCount.current = reconnectCount;
+    }
+  }, [reconnectCount]);
 
   useEffect(() => {
     if (!terminalRef.current) return;
@@ -30,22 +43,22 @@ export const PlaygroundTerminal = () => {
         cursorAccent: "#080809",
         selectionBackground: "rgba(91,127,255,0.25)",
         // ANSI colors
-        black:   "#0A0A0B",
-        red:     "#FF5757",
-        green:   "#2DD98F",
-        yellow:  "#FFB547",
-        blue:    "#5B7FFF",
+        black: "#0A0A0B",
+        red: "#FF5757",
+        green: "#2DD98F",
+        yellow: "#FFB547",
+        blue: "#5B7FFF",
         magenta: "#C792EA",
-        cyan:    "#89DDFF",
-        white:   "#F0EEE8",
-        brightBlack:   "#6E6D6A",
-        brightRed:     "#FF5757",
-        brightGreen:   "#3EFF9E",
-        brightYellow:  "#FFB547",
-        brightBlue:    "#82AAFF",
+        cyan: "#89DDFF",
+        white: "#F0EEE8",
+        brightBlack: "#6E6D6A",
+        brightRed: "#FF5757",
+        brightGreen: "#3EFF9E",
+        brightYellow: "#FFB547",
+        brightBlue: "#82AAFF",
         brightMagenta: "#A78BFA",
-        brightCyan:    "#89DDFF",
-        brightWhite:   "#FFFFFF",
+        brightCyan: "#89DDFF",
+        brightWhite: "#FFFFFF",
       },
     });
 
@@ -65,7 +78,9 @@ export const PlaygroundTerminal = () => {
       sendData(data);
     });
 
-    const handleResize = () => { fitAddon.fit(); };
+    const handleResize = () => {
+      fitAddon.fit();
+    };
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -87,11 +102,11 @@ export const PlaygroundTerminal = () => {
             <span
               className={cn(
                 "h-1.5 w-1.5 rounded-full shrink-0",
-                isConnected ? "bg-success" : "animate-pulse bg-error"
+                isConnected ? "bg-success" : "animate-pulse bg-error",
               )}
             />
             <span className="font-heading text-[12px] tracking-tight text-text-secondary">
-              Terminal{!isConnected ? ' (Disconnected)' : ''}
+              Terminal{!isConnected ? " (Disconnected)" : ""}
             </span>
           </div>
         </div>
