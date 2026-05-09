@@ -76,35 +76,24 @@ export const LandingHero = () => {
         <motion.div
           variants={FADE_UP_VARIANTS}
           transition={{ duration: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-3"
+          className="flex items-center justify-center"
         >
           <Button
             size="lg"
             onClick={() => void handleCreate()}
             disabled={isCreatingProject}
             className={cn(
-              "h-10 rounded-[4px] bg-accent px-5 text-sm font-medium text-white shadow-[0_0_20px_rgba(91,127,255,0.35)] transition-opacity hover:opacity-90 disabled:opacity-70"
+              "h-12 rounded-[4px] bg-accent px-8 text-base font-medium text-white shadow-[0_0_25px_rgba(91,127,255,0.4)] transition-all hover:scale-[1.02] hover:opacity-95 active:scale-[0.98] disabled:opacity-70"
             )}
           >
             {isCreatingProject ? (
               <>
-                <Spinner className="mr-2" />
-                Allocating...
+                <Spinner className="mr-2 h-4 w-4" />
+                Spinning up sandbox...
               </>
             ) : (
-              "Start for free"
+              "Launch Playground"
             )}
-          </Button>
-
-          <Button
-            variant="outline"
-            size="lg"
-            className="group h-10 rounded-[4px] border-border-default/12 px-5 text-sm font-medium text-text-primary hover:border-accent"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mr-2">
-              <path d="M2.5 1.5L9.5 6L2.5 10.5V1.5Z" className="fill-text-primary" />
-            </svg>
-            View demo
           </Button>
         </motion.div>
 
