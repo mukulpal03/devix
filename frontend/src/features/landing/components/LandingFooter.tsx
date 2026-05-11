@@ -3,19 +3,17 @@ import { Link } from 'react-router-dom'
 const COLUMNS = [
   {
     label: 'Product',
-    links: ['Features', 'Pricing', 'Changelog', 'Roadmap', 'Status'],
+    links: [
+      { label: 'Features', href: '#features' },
+      { label: 'Pricing', href: '#pricing' },
+    ],
   },
   {
     label: 'Resources',
-    links: ['Docs', 'Blog', 'Templates', 'Guides', 'Community'],
-  },
-  {
-    label: 'Company',
-    links: ['About', 'Careers', 'Press', 'Legal', 'Privacy'],
-  },
-  {
-    label: 'Connect',
-    links: ['Twitter / X', 'GitHub', 'Discord', 'LinkedIn', 'Contact'],
+    links: [
+      { label: 'GitHub', href: '#' },
+      { label: 'Discord', href: '#' },
+    ],
   },
 ]
 
@@ -54,14 +52,25 @@ export const LandingFooter = () => (
     <div className="mx-auto grid max-w-[1100px] gap-12 px-6 pt-16 pb-12 sm:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
       {/* Brand */}
       <div className="flex flex-col gap-4">
-        <Link to="/" className="flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-            <rect x="2" y="2" width="7" height="7" className="fill-accent" />
-            <rect x="11" y="2" width="7" height="7" className="fill-accent-glow" />
-            <rect x="2" y="11" width="7" height="7" className="fill-accent-glow" />
-            <rect x="11" y="11" width="7" height="7" className="fill-accent" />
-          </svg>
-          <span className="font-heading text-[15px] font-medium text-text-primary">devix</span>
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path 
+                d="M6 8L10 12L6 16" 
+                stroke="black" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+              />
+              <path 
+                d="M13 16H18" 
+                stroke="black" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+              />
+            </svg>
+          </div>
+          <span className="font-heading text-base font-semibold text-text-primary">devix</span>
         </Link>
         <p className="max-w-[200px] font-heading text-[13px] leading-relaxed text-text-tertiary">
           A full development environment in your browser. No setup required.
@@ -69,25 +78,27 @@ export const LandingFooter = () => (
       </div>
 
       {/* Columns */}
-      {COLUMNS.map((col) => (
-        <div key={col.label}>
-          <h4 className="mb-4 font-heading text-[12px] font-medium tracking-wide text-text-primary">
-            {col.label}
-          </h4>
-          <ul className="flex flex-col gap-2.5">
-            {col.links.map((link) => (
-              <li key={link}>
-                <a
-                  href="#"
-                  className="font-heading text-[13px] text-text-tertiary transition-colors hover:text-text-primary"
-                >
-                  {link}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <div className="flex gap-16 sm:gap-24">
+        {COLUMNS.map((col) => (
+          <div key={col.label}>
+            <h4 className="mb-4 font-heading text-[12px] font-medium tracking-wide text-text-primary uppercase opacity-50">
+              {col.label}
+            </h4>
+            <ul className="flex flex-col gap-2.5">
+              {col.links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="font-heading text-[13px] text-text-tertiary transition-colors hover:text-text-primary"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
 
     {/* Bottom row */}

@@ -22,7 +22,7 @@ export const LandingBottomCta = () => (
       <Button
         size="lg"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="h-12 rounded-[4px] bg-accent px-7 text-[15px] font-medium text-white shadow-[0_0_32px_rgba(91,127,255,0.4)] transition-all hover:opacity-90 hover:shadow-[0_0_48px_rgba(91,127,255,0.5)] border-none"
+        className="h-12 rounded-[8px] bg-white px-8 text-[15px] font-bold text-black shadow-[0_0_32px_rgba(255,255,255,0.2)] transition-all hover:opacity-95 hover:shadow-[0_0_48px_rgba(255,255,255,0.3)] border-none"
       >
         Launch Playground
       </Button>

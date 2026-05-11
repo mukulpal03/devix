@@ -2,12 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useCreateProject } from "@/hooks/useCreateProject";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const AVATARS = ["JD", "MK", "AR", "TP", "SL"];
-const AVATAR_COLORS = ["#5B7FFF", "#A78BFA", "#2DD98F", "#FFB547", "#FF5757"];
 
 const FADE_UP_VARIANTS = {
   hidden: { opacity: 0, y: 12 },
@@ -26,12 +22,12 @@ export const LandingHero = () => {
   };
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20 pb-16">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-40 pb-16">
       {/* Dot grid background */}
       <div className="dot-grid absolute inset-0 z-0 pointer-events-none" />
 
       {/* Accent glow */}
-      <div className="absolute top-[10%] left-1/2 z-0 h-[400px] w-[700px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(91,127,255,0.12)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute top-[10%] left-1/2 z-0 h-[400px] w-[700px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Content */}
       <motion.div
@@ -40,26 +36,13 @@ export const LandingHero = () => {
         transition={{ staggerChildren: 0.08 }}
         className="relative z-10 flex w-full max-w-[860px] flex-col items-center text-center"
       >
-        {/* Badge */}
-        <motion.div variants={FADE_UP_VARIANTS} transition={{ duration: 0.6 }}>
-          <Badge
-            variant="muted"
-            className="mb-7 inline-flex h-auto items-center gap-2 rounded-full border border-border-default/10 bg-bg-secondary px-3 py-1 text-xs font-normal text-text-secondary"
-          >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent sm:h-1.5 sm:w-1.5" />
-            Now in public beta
-          </Badge>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           variants={FADE_UP_VARIANTS}
           transition={{ duration: 0.6 }}
           className="mb-5 font-display text-5xl font-normal tracking-tight italic text-text-primary leading-[1.05] sm:text-[clamp(52px,8vw,88px)]"
         >
-          Code.{" "}
-          <span className="accent-gradient">Run.</span>{" "}
-          Ship.
+          Code. <span className="accent-gradient">Run.</span> Ship.
         </motion.h1>
 
         {/* Subheadline */}
@@ -71,7 +54,6 @@ export const LandingHero = () => {
           A full development environment in your browser. No setup. No config.
           Just code.
         </motion.p>
-
         {/* CTA Row */}
         <motion.div
           variants={FADE_UP_VARIANTS}
@@ -83,43 +65,18 @@ export const LandingHero = () => {
             onClick={() => void handleCreate()}
             disabled={isCreatingProject}
             className={cn(
-              "h-12 rounded-[4px] bg-accent px-8 text-base font-medium text-white shadow-[0_0_25px_rgba(91,127,255,0.4)] transition-all hover:scale-[1.02] hover:opacity-95 active:scale-[0.98] disabled:opacity-70"
+              "h-12 rounded-[8px] bg-white px-8 text-base font-bold text-black shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all hover:scale-[1.02] hover:bg-white/95 active:scale-[0.98] disabled:opacity-70",
             )}
           >
             {isCreatingProject ? (
               <>
-                <Spinner className="mr-2 h-4 w-4" />
-                Spinning up sandbox...
+                <Spinner className="mr-2 h-4 w-4 border-black" />
+                <span className="text-black">Spinning up sandbox...</span>
               </>
             ) : (
               "Launch Playground"
             )}
           </Button>
-        </motion.div>
-
-        {/* Social proof */}
-        <motion.div
-          variants={FADE_UP_VARIANTS}
-          transition={{ duration: 0.6 }}
-          className="mt-5 flex items-center gap-2.5"
-        >
-          <div className="flex">
-            {AVATARS.map((initials, i) => (
-              <div
-                key={initials}
-                className={cn(
-                  "flex h-6 w-6 items-center justify-center rounded-full border-2 border-bg-primary text-[9px] font-medium text-white",
-                  i !== 0 && "-ml-2"
-                )}
-                style={{ background: AVATAR_COLORS[i] }}
-              >
-                {initials}
-              </div>
-            ))}
-          </div>
-          <span className="text-sm font-heading text-text-tertiary">
-            Trusted by 12,000+ developers
-          </span>
         </motion.div>
 
         {/* Error */}
@@ -183,7 +140,9 @@ export const LandingHero = () => {
                   key={i}
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-1 font-heading text-sm transition-colors",
-                    item.active ? "bg-accent/10 border-l-2 border-accent text-text-primary" : "text-text-secondary hover:bg-white/4 border-l-2 border-transparent"
+                    item.active
+                      ? "bg-accent/10 border-l-2 border-accent text-text-primary"
+                      : "text-text-secondary hover:bg-white/4 border-l-2 border-transparent",
                   )}
                   style={{ paddingLeft: `${12 + item.depth * 12}px` }}
                 >
@@ -270,24 +229,17 @@ export const LandingHero = () => {
                   <span className="text-[#82AAFF]">div</span>{" "}
                   <span className="text-[#FFCB6B]">className</span>
                   ="
-                  <span className="text-[#C3E88D]">min-h-screen</span>
-                  "{">"}
+                  <span className="text-[#C3E88D]">min-h-screen</span>"{">"}
                 </div>
                 <div className="pl-16 text-[#89DDFF]">
                   {"<"}
                   <span className="text-[#82AAFF]">h1</span>
                   {">"}
-                  <span className="text-[#EEFFFF]">
-                    Devix is blazing fast
-                  </span>
+                  <span className="text-[#EEFFFF]">Devix is blazing fast</span>
                   {"</h1>"}
                 </div>
-                <div className="pl-12 text-[#89DDFF]">
-                  {"</div>"}
-                </div>
-                <div className="pl-6 text-[#89DDFF]">
-                  )
-                </div>
+                <div className="pl-12 text-[#89DDFF]">{"</div>"}</div>
+                <div className="pl-6 text-[#89DDFF]">)</div>
                 <div>
                   <span className="text-[#89DDFF]">{"}"}</span>
                 </div>
