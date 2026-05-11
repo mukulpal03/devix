@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Share2, Settings } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 interface PlaygroundNavbarProps {
   projectId: string;
@@ -34,31 +32,8 @@ export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
         </div>
       </div>
 
-      {/* Right — Share + Avatar + Settings */}
-      <div className="flex items-center gap-2">
-        {/* Share */}
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-7 gap-1.5 rounded-[4px] border-white/10 bg-transparent px-2.5 text-[12px] text-text-secondary transition-all hover:border-white/20 hover:text-text-primary"
-        >
-          <Share2 size={12} />
-          Share
-        </Button>
-
-        {/* User avatar */}
-        <div className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full bg-accent font-heading text-[10px] font-medium text-white transition-opacity hover:opacity-90">
-          U
-        </div>
-
-        {/* Settings */}
-        <button
-          title="Settings"
-          className="flex items-center p-1 text-text-tertiary transition-colors hover:text-text-primary"
-        >
-          <Settings size={14} />
-        </button>
-      </div>
+      {/* Right — Empty */}
+      <div />
     </header>
   )
 }

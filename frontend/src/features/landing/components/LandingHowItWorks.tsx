@@ -5,17 +5,17 @@ const STEPS = [
   {
     number: '01',
     label: 'Create a project',
-    copy: 'Pick a template or import from GitHub. Ready in under 3 seconds.',
+    copy: 'Pick a template or start from scratch. Ready in under 3 seconds.',
   },
   {
     number: '02',
     label: 'Write and run code',
-    copy: 'Full IDE in browser. Terminal, files, AI assist — everything you need.',
+    copy: 'Full IDE in your browser. Terminal, file explorer, and live preview — everything you need.',
   },
   {
     number: '03',
-    label: 'Ship it',
-    copy: 'One-click deploy or export to any platform. Live in seconds.',
+    label: 'Build and Iterates',
+    copy: 'Use the playground to prototype ideas and test code instantly.',
   },
 ]
 
