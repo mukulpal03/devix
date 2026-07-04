@@ -189,3 +189,9 @@
 .pricing-pro-gradient {
   background: linear-gradient(180deg, rgba(91,127,255,0.06) 0%, transparent 60%);
 }
+
+/* ── Monaco Editor Overrides ────────────────────────── */
+.monaco-editor .sticky-widget {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}

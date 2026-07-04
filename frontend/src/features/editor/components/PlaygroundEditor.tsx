@@ -43,6 +43,9 @@ loader.init().then((monaco) => {
       "tab.border": "#ffffff08",
       "editorGutter.background": "#0E0E11",
       "minimap.background": "#0E0E11",
+      "editorStickyScroll.background": "#0E0E11",
+      "editorStickyScroll.border": "#ffffff08",
+      "editorStickyScroll.shadow": "#00000000",
     },
   });
 });
