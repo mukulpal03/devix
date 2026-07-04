@@ -15,7 +15,7 @@ export const FileTree = ({ root, onFileClick, openDialog, openDeleteDialog }: Fi
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      <div className="flex-1 overflow-y-auto pt-2 pb-8 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto pt-3 pb-8 scrollbar-hide">
         {root.children?.map((node) => (
           <FileTreeNode
             key={node.name}

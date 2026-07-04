@@ -11,40 +11,40 @@ loader.init().then((monaco) => {
     base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "keyword", foreground: "C792EA" },
-      { token: "string", foreground: "C3E88D" },
-      { token: "number", foreground: "F78C6C" },
-      { token: "comment", foreground: "4A4A6A" },
-      { token: "identifier", foreground: "EEFFFF" },
-      { token: "type", foreground: "FFCB6B" },
-      { token: "delimiter", foreground: "89DDFF" },
-      { token: "variable", foreground: "EEFFFF" },
+      { token: "keyword", foreground: "569CD6" },
+      { token: "string", foreground: "CE9178" },
+      { token: "number", foreground: "B5CEA8" },
+      { token: "comment", foreground: "6A9955" },
+      { token: "identifier", foreground: "9CDCFE" },
+      { token: "type", foreground: "4EC9B0" },
+      { token: "delimiter", foreground: "D4D4D4" },
+      { token: "variable", foreground: "9CDCFE" },
     ],
     colors: {
-      "editor.background": "#0C0C12",
-      "editor.foreground": "#E8E8ED",
-      "editorLineNumber.foreground": "#3A3A50",
-      "editorLineNumber.activeForeground": "#6366F1",
-      "editor.lineHighlightBackground": "#6366F108",
-      "editor.selectionBackground": "#6366F133",
-      "editor.inactiveSelectionBackground": "#6366F11A",
-      "editorCursor.foreground": "#6366F1",
-      "editor.findMatchBackground": "#6366F144",
-      "editorWidget.background": "#111118",
-      "editorWidget.border": "#ffffff0A",
-      "editorSuggestWidget.background": "#111118",
-      "editorSuggestWidget.border": "#ffffff0A",
-      "editorSuggestWidget.selectedBackground": "#6366F120",
-      "scrollbar.shadow": "transparent",
-      "scrollbarSlider.background": "#6366F115",
-      "scrollbarSlider.hoverBackground": "#6366F125",
-      "tab.activeBackground": "#0C0C12",
-      "tab.inactiveBackground": "#08080C",
-      "tab.border": "#ffffff07",
-      "editorGutter.background": "#0C0C12",
-      "minimap.background": "#0C0C12",
-      "editorStickyScroll.background": "#0C0C12",
-      "editorStickyScroll.border": "#ffffff07",
+      "editor.background": "#1E1E1E",
+      "editor.foreground": "#D4D4D4",
+      "editorLineNumber.foreground": "#858585",
+      "editorLineNumber.activeForeground": "#C6C6C6",
+      "editor.lineHighlightBackground": "#2F313433",
+      "editor.selectionBackground": "#264F78",
+      "editor.inactiveSelectionBackground": "#3A3D41",
+      "editorCursor.foreground": "#AEAFAD",
+      "editor.findMatchBackground": "#515C6A",
+      "editorWidget.background": "#252526",
+      "editorWidget.border": "#454545",
+      "editorSuggestWidget.background": "#252526",
+      "editorSuggestWidget.border": "#454545",
+      "editorSuggestWidget.selectedBackground": "#073E6C",
+      "scrollbar.shadow": "#00000000",
+      "scrollbarSlider.background": "#79797940",
+      "scrollbarSlider.hoverBackground": "#79797964",
+      "tab.activeBackground": "#1E1E1E",
+      "tab.inactiveBackground": "#2D2D2D",
+      "tab.border": "#252526",
+      "editorGutter.background": "#1E1E1E",
+      "minimap.background": "#1E1E1E",
+      "editorStickyScroll.background": "#1E1E1E",
+      "editorStickyScroll.border": "#2D2D2D",
       "editorStickyScroll.shadow": "#00000000",
     },
   });
@@ -90,7 +90,7 @@ export const PlaygroundEditor = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-editor">
+    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-primary">
       {tabs.length > 0 ? (
         <>
           <EditorTabs
@@ -99,7 +99,7 @@ export const PlaygroundEditor = () => {
             onTabChange={setActiveTab}
             onTabClose={closeTab}
           />
-          <div className="relative flex-1 w-full">
+          <div className="relative flex-1 w-full bg-bg-primary">
             <Editor
               language={activeLanguage}
               value={activeCode}
@@ -122,8 +122,8 @@ export const PlaygroundEditor = () => {
                 glyphMargin: false,
                 folding: true,
                 scrollbar: {
-                  verticalScrollbarSize: 6,
-                  horizontalScrollbarSize: 6,
+                  verticalScrollbarSize: 5,
+                  horizontalScrollbarSize: 5,
                 },
                 overviewRulerBorder: false,
               }}
@@ -131,13 +131,16 @@ export const PlaygroundEditor = () => {
           </div>
         </>
       ) : (
-        <div className="flex h-full items-center justify-center bg-bg-editor">
-          <div className="flex flex-col items-center gap-3 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-accent/15 bg-accent/[0.06]">
-              <File className="h-5.5 w-5.5 text-accent/50" strokeWidth={1.5} />
+        <div className="flex h-full items-center justify-center bg-bg-primary">
+          <div className="flex flex-col items-center gap-4 text-center">
+            {/* Double-Bezel Icon Container */}
+            <div className="rounded-2xl border border-white/[0.04] bg-white/[0.01] p-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-bg-card-inner border border-white/[0.04] shadow-[inset_0_1px_1px_rgba(255,255,255,0.04)]">
+                <File className="h-5 w-5 text-accent" strokeWidth={1.5} />
+              </div>
             </div>
-            <span className="font-heading text-[13px] text-text-tertiary">
-              Select a file from the explorer to begin.
+            <span className="font-heading text-[12px] tracking-tight text-text-secondary max-w-[200px]">
+              Select a file from the explorer to begin writing code.
             </span>
           </div>
         </div>

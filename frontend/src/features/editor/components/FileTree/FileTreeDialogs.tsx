@@ -43,9 +43,9 @@ export const FileTreeDialogs = ({
 }: FileTreeDialogsProps) => {
   const getDialogTitle = () => {
     switch (dialogState.type) {
-      case 'rename': return 'Rename';
-      case 'createFile': return 'New File';
-      case 'createFolder': return 'New Folder';
+      case 'rename': return 'Rename Workspace Node';
+      case 'createFile': return 'Create Workspace File';
+      case 'createFolder': return 'Create Workspace Folder';
       default: return '';
     }
   };
@@ -53,40 +53,40 @@ export const FileTreeDialogs = ({
   return (
     <>
       <Dialog open={dialogState.type !== null} onOpenChange={(open) => !open && closeDialogs()}>
-        <DialogContent className="sm:max-w-[425px] bg-bg-elevated border-white/[0.07] text-text-primary">
-          <form onSubmit={handleDialogSubmit}>
+        <DialogContent className="sm:max-w-[400px] bg-bg-secondary border border-white/[0.04] text-text-primary rounded-2xl p-6 shadow-[0_24px_64px_rgba(0,0,0,0.6)]">
+          <form onSubmit={handleDialogSubmit} className="space-y-6">
             <DialogHeader>
-              <DialogTitle className="font-display text-lg font-semibold text-text-primary">
+              <DialogTitle className="font-display text-lg font-bold text-text-primary tracking-tight">
                 {getDialogTitle()}
               </DialogTitle>
             </DialogHeader>
-            <div className="grid gap-4 py-6">
-              <div className="grid gap-2">
-                <Label htmlFor="name" className="font-heading text-xs uppercase tracking-widest text-text-secondary">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  autoFocus
-                  className="h-9 bg-bg-primary border-white/[0.07] text-sm focus:ring-accent/50"
-                  placeholder={dialogState.type === 'createFolder' ? 'new-folder' : 'new-file.ts'}
-                />
-              </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="name" className="font-heading text-[10px] font-semibold uppercase tracking-[0.16em] text-text-secondary">
+                Node Name
+              </Label>
+              <Input
+                id="name"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                autoFocus
+                className="h-10 bg-bg-primary border border-white/[0.04] text-sm focus:border-accent/30 focus:ring-accent-glow rounded-xl font-heading font-medium tracking-tight text-text-primary"
+                placeholder={dialogState.type === 'createFolder' ? 'new-folder' : 'new-file.ts'}
+              />
             </div>
-            <DialogFooter className="gap-2 sm:gap-0">
+            
+            <DialogFooter className="gap-2 sm:gap-0 pt-2">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={closeDialogs}
-                className="h-9 rounded-md border-white/[0.06] bg-transparent text-text-secondary hover:bg-white/[0.04] hover:text-text-primary"
+                className="h-10 rounded-full border border-white/[0.05] bg-transparent text-text-secondary hover:bg-white/[0.02] hover:text-text-primary px-5 text-xs font-semibold"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit"
-                className="h-9 rounded-md bg-accent text-white hover:bg-accent/90 border-none"
+                className="h-10 rounded-full bg-accent text-white hover:bg-accent/90 border-none px-6 text-xs font-semibold shadow-[0_0_24px_rgba(16,185,129,0.15)] transition-all duration-300 hover:shadow-[0_0_32px_rgba(16,185,129,0.25)]"
               >
                 Confirm
               </Button>
@@ -96,24 +96,24 @@ export const FileTreeDialogs = ({
       </Dialog>
 
       <AlertDialog open={deleteNode !== null} onOpenChange={(open) => !open && closeDialogs()}>
-        <AlertDialogContent className="bg-bg-elevated border-white/[0.07] text-text-primary">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="font-display text-lg font-semibold text-text-primary">
+        <AlertDialogContent className="bg-bg-secondary border border-white/[0.04] text-text-primary rounded-2xl p-6 shadow-[0_24px_64px_rgba(0,0,0,0.6)]">
+          <AlertDialogHeader className="space-y-3">
+            <AlertDialogTitle className="font-display text-lg font-bold text-text-primary tracking-tight">
               Are you absolutely sure?
             </AlertDialogTitle>
-            <AlertDialogDescription className="font-heading text-sm text-text-secondary">
-              This will permanently delete the {deleteNode?.type === 'directory' ? 'folder' : 'file'} "{deleteNode?.name}".
+            <AlertDialogDescription className="font-heading text-sm text-text-secondary leading-relaxed">
+              This action is destructive and will permanently delete the {deleteNode?.type === 'directory' ? 'folder' : 'file'} "{deleteNode?.name}".
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="gap-2 sm:gap-0">
-            <AlertDialogCancel className="h-9 rounded-md border-white/[0.06] bg-transparent text-text-secondary hover:bg-white/[0.04] hover:text-text-primary">
+          <AlertDialogFooter className="gap-2 sm:gap-0 pt-4">
+            <AlertDialogCancel className="h-10 rounded-full border border-white/[0.05] bg-transparent text-text-secondary hover:bg-white/[0.02] hover:text-text-primary px-5 text-xs font-semibold">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDeleteSubmit} 
-              className="h-9 rounded-md bg-error text-white hover:bg-error/90 border-none px-6"
+              className="h-10 rounded-full bg-error text-white hover:bg-error/90 border-none px-6 text-xs font-semibold shadow-[0_0_24px_rgba(239,68,68,0.15)] transition-all duration-300 hover:shadow-[0_0_32px_rgba(239,68,68,0.25)]"
             >
-              Delete
+              Delete Node
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

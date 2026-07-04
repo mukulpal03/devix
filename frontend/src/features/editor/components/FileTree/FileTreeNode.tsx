@@ -42,24 +42,24 @@ export const FileTreeNode = ({
       type="button"
       onClick={handleClick}
       className={cn(
-        "flex w-full items-center gap-1.5 py-0.5 pr-2 text-left text-[13px] font-heading",
-        "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary cursor-pointer transition-colors outline-none",
+        "flex w-full items-center gap-2 py-1 pr-2 text-left text-[12px] font-heading",
+        "text-text-secondary hover:bg-white/[0.02] hover:text-text-primary cursor-pointer transition-all duration-300 outline-none",
       )}
       style={{ paddingLeft: `${depth * 12 + 12}px` }}
     >
-      <div className="flex w-3.5 items-center justify-center">
+      <div className="flex w-3.5 items-center justify-center text-text-tertiary">
         {isDirectory && (
-          isOpen ? <ChevronDown size={12} strokeWidth={2.5} /> : <ChevronRight size={12} strokeWidth={2.5} />
+          isOpen ? <ChevronDown size={11} strokeWidth={2.5} /> : <ChevronRight size={11} strokeWidth={2.5} />
         )}
       </div>
 
       {isDirectory ? (
-        <FolderIcon name={node.name} size={15} />
+        <FolderIcon name={node.name} size={14} className="text-accent" />
       ) : (
-        <FileIcon name={node.name} size={15} />
+        <FileIcon name={node.name} size={14} />
       )}
 
-      <span className="truncate">{node.name}</span>
+      <span className="truncate font-medium">{node.name}</span>
     </button>
   );
 
@@ -67,24 +67,24 @@ export const FileTreeNode = ({
     <div>
       <ContextMenu>
         <ContextMenuTrigger>{TreeElement}</ContextMenuTrigger>
-        <ContextMenuContent className="min-w-[160px] bg-bg-elevated border-white/[0.07] text-text-primary">
+        <ContextMenuContent className="min-w-[160px] bg-bg-elevated border border-white/[0.04] text-text-primary rounded-lg p-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)]">
           {isDirectory ? (
             <>
-              <ContextMenuItem onClick={() => onContextMenuAction?.('createFile', node)} className="text-[13px]">
+              <ContextMenuItem onClick={() => onContextMenuAction?.('createFile', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
                 New File
               </ContextMenuItem>
-              <ContextMenuItem onClick={() => onContextMenuAction?.('createFolder', node)} className="text-[13px]">
+              <ContextMenuItem onClick={() => onContextMenuAction?.('createFolder', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
                 New Folder
               </ContextMenuItem>
-              <ContextMenuSeparator className="bg-white/[0.05]" />
+              <ContextMenuSeparator className="bg-white/[0.04] my-1" />
             </>
           ) : null}
-          <ContextMenuItem onClick={() => onContextMenuAction?.('rename', node)} className="text-[13px]">
+          <ContextMenuItem onClick={() => onContextMenuAction?.('rename', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
             Rename
           </ContextMenuItem>
           <ContextMenuItem 
             onClick={() => onContextMenuAction?.('delete', node)} 
-            className="text-[13px] text-error focus:text-error focus:bg-error/10"
+            className="text-[12px] px-2.5 py-1.5 text-error focus:text-white focus:bg-error/80 rounded-md transition-all duration-200"
           >
             Delete
           </ContextMenuItem>

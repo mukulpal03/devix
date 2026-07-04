@@ -19,7 +19,7 @@ export const EditorTabs = ({
 }: EditorTabsProps) => {
   return (
     <div
-      className="scrollbar-hide flex h-8 w-full items-end overflow-x-auto border-b border-white/[0.05] bg-bg-primary"
+      className="scrollbar-hide flex h-9 w-full items-end overflow-x-auto border-b border-white/[0.04] bg-bg-deep px-2"
     >
       <AnimatePresence mode="popLayout" initial={false}>
         {tabs.map((tab) => {
@@ -32,13 +32,15 @@ export const EditorTabs = ({
               role="button"
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2 border-r border-white/[0.04] px-3 font-heading text-[13px] transition-colors duration-150",
-                isActive ? "bg-bg-editor text-text-primary" : "text-text-secondary hover:bg-white/[0.03] hover:text-white/80"
+                "group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2.5 rounded-t-lg border-x border-t border-transparent px-3 font-heading text-[12px] transition-all duration-300",
+                isActive
+                  ? "border-white/[0.04] bg-bg-primary text-text-primary shadow-[0_-4px_12px_rgba(0,0,0,0.2)]"
+                  : "text-text-secondary hover:bg-white/[0.02] hover:text-text-primary"
               )}
             >
-              <div className="flex min-w-0 items-center gap-1.5 overflow-hidden">
+              <div className="flex min-w-0 items-center gap-2 overflow-hidden">
                 <FileIcon name={tab.label} size={13} />
-                <span className="truncate whitespace-nowrap">
+                <span className="truncate font-medium">
                   {tab.label}
                 </span>
               </div>
@@ -51,20 +53,22 @@ export const EditorTabs = ({
                     onTabClose(tab.id);
                   }}
                   className={cn(
-                    "flex shrink-0 items-center rounded-sm p-0.5 transition-all duration-100",
-                    isActive ? "text-text-secondary opacity-100" : "text-transparent opacity-0 group-hover:text-text-secondary group-hover:opacity-100 hover:bg-white/[0.06] hover:text-text-primary"
+                    "flex shrink-0 items-center rounded p-0.5 transition-all duration-300",
+                    isActive
+                      ? "text-text-secondary hover:bg-white/[0.05] hover:text-text-primary"
+                      : "text-transparent opacity-0 group-hover:text-text-secondary group-hover:opacity-100 hover:bg-white/[0.05] hover:text-text-primary"
                   )}
                 >
-                  <X size={12} />
+                  <X size={11} />
                 </button>
               )}
 
-              {/* Active Indicator */}
+              {/* Active indicator bar */}
               {isActive && (
                 <motion.div
                   layoutId="active-tab-indicator"
-                  className="absolute bottom-0 left-0 h-px w-full bg-accent"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  className="absolute -bottom-[1px] left-[10%] h-[1.5px] w-[80%] bg-accent"
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                 />
               )}
             </motion.div>

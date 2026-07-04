@@ -37,27 +37,27 @@ export const PlaygroundTerminal = () => {
       fontWeight: "normal",
       lineHeight: 1.5,
       theme: {
-        background: "#06060A",
-        foreground: "#E8E8ED",
-        cursor: "#F59E0B",
-        cursorAccent: "#06060A",
-        selectionBackground: "rgba(99,102,241,0.25)",
+        background: "#050505",
+        foreground: "#EAEAF0",
+        cursor: "#10B981",
+        cursorAccent: "#050505",
+        selectionBackground: "rgba(16,185,129,0.22)",
         // ANSI colors
-        black: "#08080C",
+        black: "#0A0A0F",
         red: "#EF4444",
-        green: "#34D399",
-        yellow: "#F59E0B",
-        blue: "#6366F1",
-        magenta: "#A78BFA",
-        cyan: "#89DDFF",
-        white: "#E8E8ED",
-        brightBlack: "#55556A",
+        green: "#10B981",
+        yellow: "#FBBF24",
+        blue: "#34D399",
+        magenta: "#6EE7B7",
+        cyan: "#A7F3D0",
+        white: "#EAEAF0",
+        brightBlack: "#484860",
         brightRed: "#EF4444",
         brightGreen: "#34D399",
-        brightYellow: "#F59E0B",
-        brightBlue: "#818CF8",
-        brightMagenta: "#A78BFA",
-        brightCyan: "#89DDFF",
+        brightYellow: "#FBBF24",
+        brightBlue: "#6EE7B7",
+        brightMagenta: "#A7F3D0",
+        brightCyan: "#EAEAF0",
         brightWhite: "#FFFFFF",
       },
     });
@@ -94,18 +94,18 @@ export const PlaygroundTerminal = () => {
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-deep">
+    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-primary">
       {/* Terminal tab bar */}
-      <div className="flex h-7 shrink-0 items-center justify-between border-b border-white/[0.04] bg-bg-deep px-3">
+      <div className="flex h-8 shrink-0 items-center justify-between border-b border-white/[0.04] bg-bg-deep px-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-5 items-center gap-1.5 rounded-[3px] border border-white/[0.06] bg-white/[0.03] px-2">
+          <div className="flex h-5 items-center gap-1.5 rounded-[4px] border border-white/[0.05] bg-white/[0.01] px-2">
             <span
               className={cn(
                 "h-1.5 w-1.5 rounded-full shrink-0",
                 isConnected ? "bg-success" : "animate-pulse bg-error",
               )}
             />
-            <span className="font-heading text-[12px] tracking-tight text-text-secondary">
+            <span className="font-heading text-[11px] tracking-wide text-text-secondary font-medium uppercase">
               Terminal{!isConnected ? " (Disconnected)" : ""}
             </span>
           </div>
@@ -114,15 +114,15 @@ export const PlaygroundTerminal = () => {
         {/* + new terminal */}
         <button
           title="New Terminal"
-          className="flex items-center rounded-sm p-0.5 text-text-tertiary transition-colors hover:text-text-primary hover:bg-white/[0.05]"
+          className="flex items-center rounded p-1 text-text-tertiary transition-all duration-300 hover:text-text-primary hover:bg-white/[0.04] active:scale-[0.95]"
         >
           <Plus size={13} />
         </button>
       </div>
 
       {/* xterm content */}
-      <div className="relative flex-1 overflow-hidden">
-        <div ref={terminalRef} className="absolute inset-0 p-1 px-2" />
+      <div className="relative flex-1 overflow-hidden bg-bg-primary">
+        <div ref={terminalRef} className="absolute inset-0 p-2" />
       </div>
     </div>
   );
