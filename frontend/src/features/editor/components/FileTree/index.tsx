@@ -1,27 +1,17 @@
 import { FileTreeNode } from './FileTreeNode'
 import type { DirectoryNode } from '@/types/project'
-import { FileTreeDialogs } from './FileTreeDialogs'
-import { useFileTreeDialogs } from '@/hooks/useFileTreeDialogs'
 import { useFileTreeToggle } from '@/hooks/useFileTreeToggle'
+import type { DialogType } from '@/features/editor/components/FileTree/FileTreeDialogs'
 
 interface FileTreeProps {
   root: DirectoryNode
   onFileClick?: (node: DirectoryNode) => void
+  openDialog: (type: DialogType, node: DirectoryNode) => void
+  openDeleteDialog: (node: DirectoryNode) => void
 }
 
-export const FileTree = ({ root, onFileClick }: FileTreeProps) => {
+export const FileTree = ({ root, onFileClick, openDialog, openDeleteDialog }: FileTreeProps) => {
   const { openFolders, toggleFolder } = useFileTreeToggle()
-  const {
-    dialogState,
-    deleteNode,
-    inputValue,
-    setInputValue,
-    openDialog,
-    openDeleteDialog,
-    closeDialogs,
-    handleDialogSubmit,
-    handleDeleteSubmit,
-  } = useFileTreeDialogs()
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
@@ -44,16 +34,6 @@ export const FileTree = ({ root, onFileClick }: FileTreeProps) => {
           />
         ))}
       </div>
-
-      <FileTreeDialogs
-        dialogState={dialogState}
-        deleteNode={deleteNode}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        closeDialogs={closeDialogs}
-        handleDialogSubmit={handleDialogSubmit}
-        handleDeleteSubmit={handleDeleteSubmit}
-      />
     </div>
   )
 }

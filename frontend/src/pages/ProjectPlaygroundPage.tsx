@@ -4,9 +4,11 @@ import { PlaygroundEditor } from "@/features/editor/components/PlaygroundEditor"
 import { FileTree } from "@/features/editor/components/FileTree";
 import { PlaygroundTerminal } from "@/features/editor/components/PlaygroundTerminal";
 import { PlaygroundNavbar } from "@/features/editor/components/PlaygroundNavbar";
+import { FileTreeDialogs } from "@/features/editor/components/FileTree/FileTreeDialogs";
 import { useDirectoryTreeQuery } from "@/apis/queries/useDirectoryTreeQuery";
 import { useEditorSocket } from "@/hooks/useEditorSocket";
 import { useCreateProject } from "@/hooks/useCreateProject";
+import { useFileTreeDialogs } from "@/hooks/useFileTreeDialogs";
 import type { DirectoryNode } from "@/types/project";
 import { FolderPlus, FilePlus } from "lucide-react";
 
@@ -57,6 +59,18 @@ export const ProjectPlaygroundPage = () => {
   const [created, setCreated] = useState(!location.state?.isNew);
   const creationStartedRef = useRef(false);
 
+  const {
+    dialogState,
+    deleteNode,
+    inputValue,
+    setInputValue,
+    openDialog,
+    openDeleteDialog,
+    closeDialogs,
+    handleDialogSubmit,
+    handleDeleteSubmit,
+  } = useFileTreeDialogs();
+
   useEffect(() => {
     if (location.state?.isNew && !created && !creationStartedRef.current) {
       creationStartedRef.current = true;
@@ -87,6 +101,18 @@ export const ProjectPlaygroundPage = () => {
     }
   };
 
+  const handleCreateFileFromHeader = () => {
+    if (data?.tree) {
+      openDialog("createFile", data.tree);
+    }
+  };
+
+  const handleCreateFolderFromHeader = () => {
+    if (data?.tree) {
+      openDialog("createFolder", data.tree);
+    }
+  };
+
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-bg-editor font-sans text-text-primary selection:bg-accent/30 selection:text-white">
       <PlaygroundNavbar projectId={projectId ?? ""} />
@@ -101,14 +127,18 @@ export const ProjectPlaygroundPage = () => {
             </span>
             <div className="flex items-center gap-1.5">
               <button
+                onClick={handleCreateFileFromHeader}
+                disabled={!data?.tree}
                 title="New File"
-                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary"
+                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary disabled:opacity-50"
               >
                 <FilePlus size={14} />
               </button>
               <button
+                onClick={handleCreateFolderFromHeader}
+                disabled={!data?.tree}
                 title="New Folder"
-                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary"
+                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary disabled:opacity-50"
               >
                 <FolderPlus size={14} />
               </button>
@@ -128,7 +158,12 @@ export const ProjectPlaygroundPage = () => {
                 Failed to load tree
               </p>
             ) : data?.tree ? (
-              <FileTree root={data.tree} onFileClick={handleFileClick} />
+              <FileTree 
+                root={data.tree} 
+                onFileClick={handleFileClick} 
+                openDialog={openDialog}
+                openDeleteDialog={openDeleteDialog}
+              />
             ) : null}
           </div>
         </aside>
@@ -151,6 +186,16 @@ export const ProjectPlaygroundPage = () => {
           </div>
         </main>
       </div>
+
+      <FileTreeDialogs
+        dialogState={dialogState}
+        deleteNode={deleteNode}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        closeDialogs={closeDialogs}
+        handleDialogSubmit={handleDialogSubmit}
+        handleDeleteSubmit={handleDeleteSubmit}
+      />
     </div>
   );
 };
