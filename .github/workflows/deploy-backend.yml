@@ -1,0 +1,45 @@
+name: Deploy Backend to VM
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VM via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VM_PORT || 22 }}
+          script: |
+            echo "🚀 Starting backend redeployment..."
+            
+            # Go to the repository directory
+            cd ${{ secrets.VM_PROJECT_PATH }}
+            
+            # Reset local changes and pull the latest main branch
+            git fetch --all
+            git reset --hard origin/main
+            
+            # Navigate to backend and install dependencies
+            cd backend
+            pnpm install
+            
+            # Run database updates
+            npx prisma generate
+            npx prisma db push
+            
+            # Build the backend application
+            pnpm build
+            
+            # Restart the PM2 process
+            pm2 restart ${{ secrets.VM_PM2_APP_NAME || 'devix-backend' }}
+            
+            echo "✅ Backend successfully redeployed!"
