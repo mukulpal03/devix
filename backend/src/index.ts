@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { createServer } from "http";
 import app from "./app";
 import { initSocket } from "./socket";
@@ -5,6 +6,7 @@ import { PORT } from "./config/server";
 import { DockerService } from "./services/docker";
 import { IdleContainerReaper } from "./services/reaper";
 import { WatcherReaper } from "./socket/watcher-reaper";
+import { TemplateService } from "./services/templates";
 
 process.on("uncaughtException", (err) => {
   console.error("[CRITICAL] Uncaught Exception:", err);
@@ -28,6 +30,7 @@ initSocket(server);
 (async () => {
   await DockerService.ensureNetwork();
   await DockerService.ensureImage();
+  await TemplateService.ensureTemplates();
   IdleContainerReaper.start();
 })();
 

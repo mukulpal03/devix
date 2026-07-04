@@ -6,15 +6,16 @@ import { REACT_PROJECT_COMMAND } from "../config/server";
 import { AppError } from "../utils/app-error";
 import { DockerService } from "./docker";
 import { StorageService } from "./storage";
+import { TemplateService } from "./templates";
 import prisma from "../libs/db";
 import { generateRandomName } from "../utils/random-name";
 import { STORAGE_TYPE, S3_CONFIG } from "../config/storage";
 
-export const createProjectService = async (): Promise<{
+export const createProjectService = async (customId?: string): Promise<{
   id: string;
   name: string;
 }> => {
-  const projectId = uuidv4();
+  const projectId = customId || uuidv4();
   const projectName = generateRandomName();
   const ownerId = uuidv4();
   const projectPath = path.resolve(process.cwd(), "projects", projectId);
@@ -34,8 +35,16 @@ export const createProjectService = async (): Promise<{
       },
     });
 
-    await fs.mkdir(projectPath, { recursive: true });
-    await DockerService.scaffoldProject(projectId, REACT_PROJECT_COMMAND);
+    const templatePath = TemplateService.getTemplatePath();
+    const entries = await fs.readdir(templatePath, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === "node_modules") continue;
+      await fs.cp(
+        path.join(templatePath, entry.name),
+        path.join(projectPath, entry.name),
+        { recursive: true }
+      );
+    }
 
     console.log(`Syncing scaffolded project ${projectId} to blob storage...`);
     await StorageService.uploadProject(projectId, projectPath);

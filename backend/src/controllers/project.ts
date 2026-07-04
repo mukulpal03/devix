@@ -13,12 +13,13 @@ export const createProject = async (
 ) => {
   try {
     console.log("call project service");
+    const { id } = req.body;
     
-    const { id, name: projectName } = await createProjectService();
+    const { id: finalId, name: projectName } = await createProjectService(id);
 
     return res
       .status(201)
-      .json({ message: "Project created", id, name: projectName });
+      .json({ message: "Project created", id: finalId, name: projectName });
   } catch (error) {
     return next(error);
   }

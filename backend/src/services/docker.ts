@@ -87,6 +87,13 @@ export class DockerService {
         }
       }
 
+      const templateNodeModulesPath = path.resolve(
+        process.cwd(),
+        "templates",
+        "react",
+        "node_modules"
+      );
+
       container = await docker.createContainer({
         Image: IMAGE_NAME,
         name: containerName,
@@ -101,7 +108,10 @@ export class DockerService {
           "8080/tcp": {},
         },
         HostConfig: {
-          Binds: [`${hostProjectPath}:/home/sandbox/projects`],
+          Binds: [
+            `${hostProjectPath}:/home/sandbox/projects`,
+            `${templateNodeModulesPath}:/home/sandbox/projects/node_modules`,
+          ],
           PortBindings: {
             "3000/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }],
             "5173/tcp": [{ HostIp: "127.0.0.1", HostPort: "0" }],

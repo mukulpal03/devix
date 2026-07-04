@@ -6,9 +6,9 @@ import type {
   GetProjectPortsResponse,
 } from "../types/project";
 
-export const createProjectApi = async (): Promise<CreateProjectResponse> => {
+export const createProjectApi = async (payload?: { id?: string }): Promise<CreateProjectResponse> => {
   try {
-    const { data } = await apiClient.post<CreateProjectResponse>("/v1/project");
+    const { data } = await apiClient.post<CreateProjectResponse>("/v1/project", payload);
     return data;
   } catch (error) {
     if (error instanceof AxiosError) {

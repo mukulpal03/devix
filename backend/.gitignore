@@ -5,3 +5,5 @@ projects/
 # Internal security documentation
 security.md
 /src/generated/prisma
+dist
+templates/*

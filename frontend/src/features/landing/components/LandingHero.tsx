@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useCreateProject } from "@/hooks/useCreateProject";
-import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -11,14 +9,11 @@ const FADE_UP_VARIANTS = {
 };
 
 export const LandingHero = () => {
-  const { createProject, isCreatingProject, projectError } = useCreateProject();
   const navigate = useNavigate();
 
-  const handleCreate = async () => {
-    try {
-      const res = await createProject();
-      navigate(`/project/${res.id}`);
-    } catch {}
+  const handleCreate = () => {
+    const generatedId = crypto.randomUUID();
+    navigate(`/project/${generatedId}`, { state: { isNew: true } });
   };
 
   return (
@@ -63,32 +58,13 @@ export const LandingHero = () => {
           <Button
             size="lg"
             onClick={() => void handleCreate()}
-            disabled={isCreatingProject}
             className={cn(
-              "h-12 rounded-[8px] bg-white px-8 text-base font-bold text-black shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all hover:scale-[1.02] hover:bg-white/95 active:scale-[0.98] disabled:opacity-70",
+              "h-12 rounded-[8px] bg-white px-8 text-base font-bold text-black shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all hover:scale-[1.02] hover:bg-white/95 active:scale-[0.98]",
             )}
           >
-            {isCreatingProject ? (
-              <>
-                <Spinner className="mr-2 h-4 w-4 border-black" />
-                <span className="text-black">Spinning up sandbox...</span>
-              </>
-            ) : (
-              "Launch Playground"
-            )}
+            Launch Playground
           </Button>
         </motion.div>
-
-        {/* Error */}
-        {projectError && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mt-4 rounded-md border border-error/30 bg-error/10 px-4 py-3 text-sm text-error"
-          >
-            {projectError}
-          </motion.div>
-        )}
       </motion.div>
 
       {/* Hero Visual — Product UI Mock */}
