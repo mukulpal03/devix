@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useCreateProject } from "@/hooks/useCreateProject";
+import { Spinner } from "@/components/ui/spinner";
 
 const NAV_LINKS = [
   { label: "Features", href: "#features" },
@@ -9,6 +11,15 @@ const NAV_LINKS = [
 
 export const LandingNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { createProject, isCreatingProject } = useCreateProject();
+  const navigate = useNavigate();
+
+  const handleCreate = async () => {
+    try {
+      const res = await createProject();
+      navigate(`/project/${res.id}`);
+    } catch {}
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -62,12 +73,20 @@ export const LandingNavbar = () => {
         </nav>
 
         {/* Right — CTA */}
-        <a 
-          href="#start"
-          className="flex h-9 items-center justify-center rounded-full bg-white px-8 text-[13px] font-bold tracking-tight text-black transition-all hover:bg-white/95 active:scale-95 shadow-sm"
+        <button 
+          onClick={() => void handleCreate()}
+          disabled={isCreatingProject}
+          className="flex h-9 items-center justify-center rounded-full bg-white px-8 text-[13px] font-bold tracking-tight text-black transition-all hover:bg-white/95 active:scale-95 disabled:opacity-70 shadow-sm cursor-pointer"
         >
-          Launch Playground
-        </a>
+          {isCreatingProject ? (
+            <>
+              <Spinner className="mr-2 h-4 w-4 border-black animate-spin" />
+              <span className="text-black">Spinning up...</span>
+            </>
+          ) : (
+            "Launch Playground"
+          )}
+        </button>
       </div>
     </header>
   );
