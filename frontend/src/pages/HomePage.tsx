@@ -8,7 +8,13 @@ import { LandingBottomCta } from "@/features/landing/components/LandingBottomCta
 import { LandingFooter } from "@/features/landing/components/LandingFooter";
 
 export const HomePage = () => (
-  <div className="min-h-screen bg-bg-primary text-text-primary font-sans selection:bg-accent/20 selection:text-white relative">
+  <div
+    className="min-h-screen font-sans"
+    style={{
+      backgroundColor: "var(--surface-page-base)",
+      color: "var(--text-heading)",
+    }}
+  >
     <LandingNavbar />
     <main>
       <LandingHero />

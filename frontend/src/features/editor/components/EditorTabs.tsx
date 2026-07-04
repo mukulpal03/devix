@@ -2,7 +2,6 @@ import { type EditorTab } from "@/store/editorTabsStore";
 import { FileIcon } from "@/features/editor/components/FileTree/FileIcon";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface EditorTabsProps {
   tabs: EditorTab[];
@@ -19,7 +18,11 @@ export const EditorTabs = ({
 }: EditorTabsProps) => {
   return (
     <div
-      className="scrollbar-hide flex h-9 w-full items-end overflow-x-auto border-b border-white/[0.04] bg-bg-deep px-2"
+      className="scrollbar-hide flex h-9 w-full items-end overflow-x-auto px-0"
+      style={{
+        backgroundColor: 'var(--surface-elevated)',
+        borderBottom: '1px solid var(--border-default-subtle)',
+      }}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         {tabs.map((tab) => {
@@ -31,16 +34,18 @@ export const EditorTabs = ({
               key={tab.id}
               role="button"
               onClick={() => onTabChange(tab.id)}
-              className={cn(
-                "group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2.5 rounded-t-lg border-x border-t border-transparent px-3 font-heading text-[12px] transition-all duration-300",
-                isActive
-                  ? "border-white/[0.04] bg-bg-primary text-text-primary shadow-[0_-4px_12px_rgba(0,0,0,0.2)]"
-                  : "text-text-secondary hover:bg-white/[0.02] hover:text-text-primary"
-              )}
+              className="group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2.5 px-3 font-sans text-[13px] transition-colors duration-200 cursor-pointer"
+              style={{
+                borderRadius: '0px',
+                color: isActive ? 'var(--text-heading)' : 'var(--text-body-subtle)',
+                borderBottom: isActive ? '2px solid var(--border-brand)' : '2px solid transparent',
+                backgroundColor: 'transparent',
+                fontWeight: isActive ? 500 : 400,
+              }}
             >
               <div className="flex min-w-0 items-center gap-2 overflow-hidden">
                 <FileIcon name={tab.label} size={13} />
-                <span className="truncate font-medium">
+                <span className="truncate">
                   {tab.label}
                 </span>
               </div>
@@ -52,24 +57,17 @@ export const EditorTabs = ({
                     e.stopPropagation();
                     onTabClose(tab.id);
                   }}
-                  className={cn(
-                    "flex shrink-0 items-center rounded p-0.5 transition-all duration-300",
-                    isActive
-                      ? "text-text-secondary hover:bg-white/[0.05] hover:text-text-primary"
-                      : "text-transparent opacity-0 group-hover:text-text-secondary group-hover:opacity-100 hover:bg-white/[0.05] hover:text-text-primary"
-                  )}
+                  className="flex shrink-0 items-center p-0.5 transition-colors duration-200"
+                  style={{
+                    borderRadius: '0px',
+                    color: isActive ? 'var(--text-body-muted)' : 'transparent',
+                    opacity: isActive ? 1 : 0,
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-heading)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = isActive ? 'var(--text-body-muted)' : 'transparent'; }}
                 >
-                  <X size={11} />
+                  <X size={11} strokeWidth={1.5} />
                 </button>
-              )}
-
-              {/* Active indicator bar */}
-              {isActive && (
-                <motion.div
-                  layoutId="active-tab-indicator"
-                  className="absolute -bottom-[1px] left-[10%] h-[1.5px] w-[80%] bg-accent"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                />
               )}
             </motion.div>
           );

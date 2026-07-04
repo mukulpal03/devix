@@ -48,31 +48,31 @@ const SOCIAL_ICONS = [
 ]
 
 export const LandingFooter = () => (
-  <footer className="border-t border-white/[0.04] bg-bg-primary py-16 relative">
+  <footer
+    className="py-16"
+    style={{
+      backgroundColor: 'var(--surface-page-base)',
+      borderTop: '1px solid var(--border-default-subtle)',
+    }}
+  >
     <div className="mx-auto grid max-w-[1200px] gap-12 px-6 sm:grid-cols-[2fr_1fr_1fr]">
       {/* Brand */}
       <div className="flex flex-col gap-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path 
-                d="M6 8L10 12L6 16" 
-                stroke="white" 
-                strokeWidth="2.5" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-              />
-              <path 
-                d="M13 16H18" 
-                stroke="white" 
-                strokeWidth="2.5" 
-                strokeLinecap="round" 
-              />
-            </svg>
-          </div>
-          <span className="font-display text-base font-semibold text-text-primary tracking-tight">devix</span>
+        <Link
+          to="/"
+          className="flex items-center gap-2.5"
+        >
+          <span
+            className="font-heading text-[16px] font-bold tracking-tight"
+            style={{ color: 'var(--text-heading)', letterSpacing: '-0.01em' }}
+          >
+            devix
+          </span>
         </Link>
-        <p className="max-w-[240px] font-heading text-[13px] leading-relaxed text-text-secondary">
+        <p
+          className="max-w-[240px] font-sans text-[15px] leading-[1.4]"
+          style={{ color: 'var(--text-body-subtle)', letterSpacing: '-0.002em' }}
+        >
           A full development environment in your browser. No setup required.
         </p>
       </div>
@@ -81,7 +81,10 @@ export const LandingFooter = () => (
       <div className="flex gap-20 sm:col-span-2 sm:justify-end">
         {COLUMNS.map((col) => (
           <div key={col.label} className="min-w-[120px]">
-            <h4 className="mb-4 font-heading text-[11px] font-semibold tracking-[0.16em] text-text-primary uppercase">
+            <h4
+              className="mb-4 font-mono text-[12px] font-normal uppercase tracking-[0.04em]"
+              style={{ color: 'var(--text-body-muted)' }}
+            >
               {col.label}
             </h4>
             <ul className="flex flex-col gap-3">
@@ -89,7 +92,17 @@ export const LandingFooter = () => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="font-heading text-[13px] text-text-secondary transition-colors duration-300 hover:text-text-primary"
+                    className="font-sans text-[15px] transition-colors duration-200"
+                    style={{ color: 'var(--text-body)', textDecoration: 'none' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = 'var(--text-heading)';
+                      e.currentTarget.style.textDecoration = 'underline';
+                      e.currentTarget.style.textUnderlineOffset = '4px';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = 'var(--text-body)';
+                      e.currentTarget.style.textDecoration = 'none';
+                    }}
                   >
                     {link.label}
                   </a>
@@ -102,8 +115,14 @@ export const LandingFooter = () => (
     </div>
 
     {/* Bottom row */}
-    <div className="mx-auto mt-12 flex max-w-[1200px] items-center justify-between border-t border-white/[0.04] px-6 pt-8">
-      <span className="font-heading text-[13px] text-text-tertiary">
+    <div
+      className="mx-auto mt-12 flex max-w-[1200px] items-center justify-between px-6 pt-8"
+      style={{ borderTop: '1px solid var(--border-default-subtle)' }}
+    >
+      <span
+        className="font-sans text-[14px]"
+        style={{ color: 'var(--text-body-muted)' }}
+      >
         © 2026 Devix. All rights reserved.
       </span>
       <div className="flex items-center gap-5">
@@ -112,7 +131,10 @@ export const LandingFooter = () => (
             key={label}
             href={href}
             aria-label={label}
-            className="text-text-tertiary transition-colors duration-300 hover:text-accent"
+            className="transition-colors duration-200"
+            style={{ color: 'var(--text-body-muted)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-heading)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-body-muted)'; }}
           >
             {icon}
           </a>

@@ -4,7 +4,6 @@ import { FitAddon } from "@xterm/addon-fit";
 import { useShellSocket } from "@/hooks/useShellSocket";
 import { useParams } from "react-router-dom";
 import { Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export const PlaygroundTerminal = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -37,28 +36,28 @@ export const PlaygroundTerminal = () => {
       fontWeight: "normal",
       lineHeight: 1.5,
       theme: {
-        background: "#050505",
-        foreground: "#EAEAF0",
-        cursor: "#10B981",
-        cursorAccent: "#050505",
-        selectionBackground: "rgba(16,185,129,0.22)",
-        // ANSI colors
-        black: "#0A0A0F",
-        red: "#EF4444",
-        green: "#10B981",
-        yellow: "#FBBF24",
-        blue: "#34D399",
-        magenta: "#6EE7B7",
-        cyan: "#A7F3D0",
-        white: "#EAEAF0",
-        brightBlack: "#484860",
-        brightRed: "#EF4444",
-        brightGreen: "#34D399",
-        brightYellow: "#FBBF24",
-        brightBlue: "#6EE7B7",
-        brightMagenta: "#A7F3D0",
-        brightCyan: "#EAEAF0",
-        brightWhite: "#FFFFFF",
+        background: "#141413",
+        foreground: "#FAF9F5",
+        cursor: "#D97757",
+        cursorAccent: "#141413",
+        selectionBackground: "rgba(217, 119, 87, 0.22)",
+        // ANSI colors — warm editorial palette
+        black: "#141413",
+        red: "#C6613F",
+        green: "#788C5D",
+        yellow: "#C6993F",
+        blue: "#6A9BCC",
+        magenta: "#C46686",
+        cyan: "#BCD1CA",
+        white: "#FAF9F5",
+        brightBlack: "#5E5D59",
+        brightRed: "#D97757",
+        brightGreen: "#9DB07F",
+        brightYellow: "#D9B66A",
+        brightBlue: "#6A9BCC",
+        brightMagenta: "#C46686",
+        brightCyan: "#BCD1CA",
+        brightWhite: "#FAF9F5",
       },
     });
 
@@ -94,18 +93,35 @@ export const PlaygroundTerminal = () => {
   }, []);
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-primary">
+    <div className="flex h-full w-full flex-col overflow-hidden" style={{ backgroundColor: 'var(--surface-feature-dark)' }}>
       {/* Terminal tab bar */}
-      <div className="flex h-8 shrink-0 items-center justify-between border-b border-white/[0.04] bg-bg-deep px-3">
+      <div
+        className="flex h-8 shrink-0 items-center justify-between px-3"
+        style={{
+          backgroundColor: 'var(--surface-elevated)',
+          borderBottom: '1px solid var(--border-default-subtle)',
+        }}
+      >
         <div className="flex items-center gap-2">
-          <div className="flex h-5 items-center gap-1.5 rounded-[4px] border border-white/[0.05] bg-white/[0.01] px-2">
+          <div
+            className="flex h-5 items-center gap-2 px-2"
+            style={{
+              border: '1px solid var(--border-default-subtle)',
+              borderRadius: '0px',
+              backgroundColor: 'var(--surface-page-base)',
+            }}
+          >
             <span
-              className={cn(
-                "h-1.5 w-1.5 rounded-full shrink-0",
-                isConnected ? "bg-success" : "animate-pulse bg-error",
-              )}
+              className="h-[6px] w-[6px] shrink-0"
+              style={{
+                backgroundColor: isConnected ? '#788C5D' : '#C6613F',
+                borderRadius: '0px',
+              }}
             />
-            <span className="font-heading text-[11px] tracking-wide text-text-secondary font-medium uppercase">
+            <span
+              className="font-mono text-[11px] font-normal uppercase tracking-[0.04em]"
+              style={{ color: 'var(--text-body-muted)' }}
+            >
               Terminal{!isConnected ? " (Disconnected)" : ""}
             </span>
           </div>
@@ -114,14 +130,17 @@ export const PlaygroundTerminal = () => {
         {/* + new terminal */}
         <button
           title="New Terminal"
-          className="flex items-center rounded p-1 text-text-tertiary transition-all duration-300 hover:text-text-primary hover:bg-white/[0.04] active:scale-[0.95]"
+          className="flex items-center p-1 transition-colors duration-200 cursor-pointer"
+          style={{ color: 'var(--text-body-muted)', borderRadius: '0px' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-heading)'; e.currentTarget.style.backgroundColor = 'var(--surface-warm-card)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-body-muted)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
         >
-          <Plus size={13} />
+          <Plus size={13} strokeWidth={1.5} />
         </button>
       </div>
 
-      {/* xterm content */}
-      <div className="relative flex-1 overflow-hidden bg-bg-primary">
+      {/* xterm content — dark editorial surface */}
+      <div className="relative flex-1 overflow-hidden" style={{ backgroundColor: '#141413' }}>
         <div ref={terminalRef} className="absolute inset-0 p-2" />
       </div>
     </div>

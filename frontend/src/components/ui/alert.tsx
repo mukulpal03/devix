@@ -1,23 +1,25 @@
-import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '../../lib/utils'
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "../../lib/utils";
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border px-4 py-3 text-sm',
+  "relative w-full rounded-none border px-4 py-3 text-[15px]",
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
-        success: 'border-green-200 bg-green-50 text-green-700',
+        default:
+          "border-[var(--border-default)] bg-[var(--surface-page-base)] text-[var(--text-heading)]",
+        success:
+          "border-[var(--border-success-subtle)] bg-[var(--bg-success-soft)] text-[var(--text-fg-success-strong)]",
         destructive:
-          'border-destructive/40 bg-destructive/10 text-destructive',
+          "border-[var(--border-danger-subtle)] bg-[var(--bg-danger-soft)] text-[var(--text-fg-danger-strong)]",
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: "default",
     },
   },
-)
+);
 
 const Alert = React.forwardRef<
   HTMLDivElement,
@@ -29,8 +31,8 @@ const Alert = React.forwardRef<
     className={cn(alertVariants({ variant }), className)}
     {...props}
   />
-))
+));
 
-Alert.displayName = 'Alert'
+Alert.displayName = "Alert";
 
-export { Alert }
+export { Alert };

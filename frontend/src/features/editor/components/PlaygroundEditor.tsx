@@ -90,7 +90,7 @@ export const PlaygroundEditor = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden bg-bg-primary">
+    <div className="flex h-full w-full flex-col overflow-hidden" style={{ backgroundColor: 'var(--surface-page-base)' }}>
       {tabs.length > 0 ? (
         <>
           <EditorTabs
@@ -99,7 +99,7 @@ export const PlaygroundEditor = () => {
             onTabChange={setActiveTab}
             onTabClose={closeTab}
           />
-          <div className="relative flex-1 w-full bg-bg-primary">
+          <div className="relative flex-1 w-full">
             <Editor
               language={activeLanguage}
               value={activeCode}
@@ -131,15 +131,27 @@ export const PlaygroundEditor = () => {
           </div>
         </>
       ) : (
-        <div className="flex h-full items-center justify-center bg-bg-primary">
+        <div
+          className="flex h-full items-center justify-center"
+          style={{ backgroundColor: 'var(--surface-page-base)' }}
+        >
           <div className="flex flex-col items-center gap-4 text-center">
-            {/* Double-Bezel Icon Container */}
-            <div className="rounded-2xl border border-white/[0.04] bg-white/[0.01] p-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-              <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-bg-card-inner border border-white/[0.04] shadow-[inset_0_1px_1px_rgba(255,255,255,0.04)]">
-                <File className="h-5 w-5 text-accent" strokeWidth={1.5} />
-              </div>
+            {/* Square icon container — 0px radius */}
+            <div
+              className="flex h-12 w-12 items-center justify-center"
+              style={{
+                backgroundColor: 'var(--surface-warm-card)',
+                borderRadius: '0px',
+                border: 'none',
+                boxShadow: 'none',
+              }}
+            >
+              <File className="h-5 w-5" strokeWidth={1.5} style={{ color: 'var(--text-heading)' }} />
             </div>
-            <span className="font-heading text-[12px] tracking-tight text-text-secondary max-w-[200px]">
+            <span
+              className="font-sans text-[14px] max-w-[200px]"
+              style={{ color: 'var(--text-body-subtle)' }}
+            >
               Select a file from the explorer to begin writing code.
             </span>
           </div>

@@ -1,5 +1,4 @@
 import { ChevronRight, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import type { DirectoryNode } from "@/types/project";
 import { FileIcon, FolderIcon } from "./FileIcon";
 import {
@@ -41,20 +40,28 @@ export const FileTreeNode = ({
     <button
       type="button"
       onClick={handleClick}
-      className={cn(
-        "flex w-full items-center gap-2 py-1 pr-2 text-left text-[12px] font-heading",
-        "text-text-secondary hover:bg-white/[0.02] hover:text-text-primary cursor-pointer transition-all duration-300 outline-none",
-      )}
-      style={{ paddingLeft: `${depth * 12 + 12}px` }}
+      className="flex w-full items-center gap-2 py-1 pr-2 text-left font-sans text-[13px] cursor-pointer transition-colors duration-200 outline-none"
+      style={{
+        paddingLeft: `${depth * 12 + 12}px`,
+        color: 'var(--text-body)',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = 'var(--surface-elevated)';
+        e.currentTarget.style.color = 'var(--text-heading)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = 'transparent';
+        e.currentTarget.style.color = 'var(--text-body)';
+      }}
     >
-      <div className="flex w-3.5 items-center justify-center text-text-tertiary">
+      <div className="flex w-3.5 items-center justify-center" style={{ color: 'var(--text-body-muted)' }}>
         {isDirectory && (
-          isOpen ? <ChevronDown size={11} strokeWidth={2.5} /> : <ChevronRight size={11} strokeWidth={2.5} />
+          isOpen ? <ChevronDown size={11} strokeWidth={2} /> : <ChevronRight size={11} strokeWidth={2} />
         )}
       </div>
 
       {isDirectory ? (
-        <FolderIcon name={node.name} size={14} className="text-accent" />
+        <FolderIcon name={node.name} size={14} className="text-body-subtle" />
       ) : (
         <FileIcon name={node.name} size={14} />
       )}
@@ -67,24 +74,46 @@ export const FileTreeNode = ({
     <div>
       <ContextMenu>
         <ContextMenuTrigger>{TreeElement}</ContextMenuTrigger>
-        <ContextMenuContent className="min-w-[160px] bg-bg-elevated border border-white/[0.04] text-text-primary rounded-lg p-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)]">
+        <ContextMenuContent
+          className="min-w-[160px] p-1"
+          style={{
+            backgroundColor: 'var(--surface-page-base)',
+            border: '1px solid var(--border-brand)',
+            borderRadius: '0px',
+            boxShadow: 'var(--shadow-overlay)',
+            color: 'var(--text-heading)',
+          }}
+        >
           {isDirectory ? (
             <>
-              <ContextMenuItem onClick={() => onContextMenuAction?.('createFile', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
+              <ContextMenuItem
+                onClick={() => onContextMenuAction?.('createFile', node)}
+                className="text-[13px] px-2.5 py-1.5 transition-colors duration-200"
+                style={{ borderRadius: '0px' }}
+              >
                 New File
               </ContextMenuItem>
-              <ContextMenuItem onClick={() => onContextMenuAction?.('createFolder', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
+              <ContextMenuItem
+                onClick={() => onContextMenuAction?.('createFolder', node)}
+                className="text-[13px] px-2.5 py-1.5 transition-colors duration-200"
+                style={{ borderRadius: '0px' }}
+              >
                 New Folder
               </ContextMenuItem>
-              <ContextMenuSeparator className="bg-white/[0.04] my-1" />
+              <ContextMenuSeparator style={{ backgroundColor: 'var(--border-default-subtle)' }} />
             </>
           ) : null}
-          <ContextMenuItem onClick={() => onContextMenuAction?.('rename', node)} className="text-[12px] px-2.5 py-1.5 focus:bg-white/[0.04] rounded-md transition-all duration-200">
+          <ContextMenuItem
+            onClick={() => onContextMenuAction?.('rename', node)}
+            className="text-[13px] px-2.5 py-1.5 transition-colors duration-200"
+            style={{ borderRadius: '0px' }}
+          >
             Rename
           </ContextMenuItem>
-          <ContextMenuItem 
-            onClick={() => onContextMenuAction?.('delete', node)} 
-            className="text-[12px] px-2.5 py-1.5 text-error focus:text-white focus:bg-error/80 rounded-md transition-all duration-200"
+          <ContextMenuItem
+            onClick={() => onContextMenuAction?.('delete', node)}
+            className="text-[13px] px-2.5 py-1.5 transition-colors duration-200"
+            style={{ borderRadius: '0px', color: 'var(--text-fg-danger)' }}
           >
             Delete
           </ContextMenuItem>

@@ -1,97 +1,142 @@
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-
-const FADE_UP_VARIANTS = {
-  hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
-};
-
 export const LandingPricing = () => {
   return (
-    <section id="pricing" className="bg-bg-primary px-6 py-28 relative">
-      <div className="absolute top-[20%] left-[10%] z-0 h-[400px] w-[400px] bg-[radial-gradient(ellipse,rgba(16,185,129,0.02)_0%,transparent_60%)] pointer-events-none" />
-
-      <div className="mx-auto max-w-[1000px] relative z-10">
+    <section
+      id="pricing"
+      className="px-6"
+      style={{
+        backgroundColor: "var(--surface-page-base)",
+        paddingTop: "84px",
+        paddingBottom: "84px",
+      }}
+    >
+      <div className="mx-auto max-w-[1200px]">
         {/* Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.1 }}
-          className="mb-20 text-center"
-        >
-          <motion.div
-            variants={FADE_UP_VARIANTS}
-            className="mb-4 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent"
+        <div className="mb-12" style={{ maxWidth: "560px" }}>
+          <div
+            className="mb-4 font-mono text-[12px] font-normal uppercase tracking-[0.04em]"
+            style={{ color: "var(--text-body-muted)" }}
           >
             Pricing
-          </motion.div>
-          <motion.h2
-            variants={FADE_UP_VARIANTS}
-            className="mb-4 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl"
+          </div>
+          <h2
+            className="mb-4 font-display font-semibold tracking-tight"
+            style={{
+              fontSize: "clamp(28px, 4vw, 40px)",
+              color: "var(--text-heading)",
+              letterSpacing: "-0.01em",
+              lineHeight: "1.15",
+            }}
           >
             Simple pricing, no surprises.
-          </motion.h2>
-          <motion.p
-            variants={FADE_UP_VARIANTS}
-            className="font-heading text-base text-text-secondary"
+          </h2>
+          <p
+            className="font-sans text-[18px] leading-[1.4]"
+            style={{ color: "var(--text-body)", letterSpacing: "-0.002em" }}
           >
             Start free. Scale when you need to.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        {/* Coming Soon Box - Double-Bezel Architecture */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-          className="relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-white/[0.01] p-2 text-center"
+        {/* Dark Editorial Feature Card — pricing content */}
+        <div
+          className="text-center"
+          style={{
+            backgroundColor: "var(--surface-feature-dark)",
+            borderRadius: "24px",
+            padding: "0",
+            border: "none",
+            boxShadow: "none",
+          }}
         >
-          <div className="pricing-pro-gradient absolute inset-0 z-0 opacity-40" />
-          <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.04)_0%,transparent_70%)]" />
-
-          <div className="relative z-10 rounded-[2.25rem] bg-bg-card-inner px-8 py-16 sm:px-16 shadow-[inset_0_1px_1px_rgba(255,255,255,0.04)]">
+          <div className="px-8 py-16 sm:px-16">
             <div className="mx-auto max-w-xl">
-              <Badge className="mb-8 bg-accent/[0.08] text-accent border-accent/20 px-4 py-1 text-xs font-semibold tracking-wider uppercase rounded-full">
+              {/* Badge — 0px radius, ivory border on dark */}
+              <div
+                className="mb-8 inline-block font-mono text-[12px] font-normal uppercase tracking-[0.04em]"
+                style={{
+                  color: "var(--surface-page-base)",
+                  border: "1px solid var(--border-on-feature-dark-strong)",
+                  borderRadius: "0px",
+                  padding: "4px 12px",
+                }}
+              >
                 Phase 1: Alpha
-              </Badge>
-              <h3 className="mb-4 font-display text-3xl font-bold text-text-primary sm:text-4xl">
+              </div>
+
+              {/* Headline — Serif on dark surface */}
+              <h3
+                className="mb-4 font-serif font-normal"
+                style={{
+                  fontSize: "clamp(32px, 5vw, 48px)",
+                  color: "var(--surface-page-base)",
+                  lineHeight: "1.1",
+                }}
+              >
                 Pricing is coming soon.
               </h3>
-              <p className="mb-10 font-heading text-base leading-relaxed text-text-secondary">
-                We're currently in alpha and everything is free to use. Create as
-                many projects as you want, and enjoy built-in{" "}
-                <span className="text-text-primary font-medium">collaborative editing</span>{" "}
+
+              <p
+                className="mb-10 font-sans text-[16px] leading-[1.5] mx-auto"
+                style={{ color: "var(--text-on-feature-dark-subtle)", maxWidth: "420px" }}
+              >
+                We're currently in alpha and everything is free to use. Create
+                as many projects as you want, and enjoy built-in{" "}
+                <span style={{ color: "var(--surface-page-base)", fontWeight: 500 }}>
+                  collaborative editing
+                </span>{" "}
                 while we build the most powerful browser-based IDE.
               </p>
-              
-              <div className="h-px w-full bg-white/[0.05] mb-10" />
-              
+
+              {/* Divider */}
+              <div
+                className="mb-10 mx-auto"
+                style={{
+                  height: "1px",
+                  backgroundColor: "var(--border-on-feature-dark)",
+                  maxWidth: "300px",
+                }}
+              />
+
+              {/* Stats */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
-                <div className="text-center group">
-                  <div className="text-4xl font-display font-extrabold text-text-primary tracking-tight transition-transform duration-500 group-hover:scale-105">
+                <div className="text-center">
+                  <div
+                    className="font-display font-bold tracking-tight"
+                    style={{ fontSize: "40px", color: "var(--surface-page-base)" }}
+                  >
                     $0
                   </div>
-                  <div className="mt-2 text-[10px] font-heading font-semibold uppercase tracking-[0.16em] text-text-tertiary">
+                  <div
+                    className="mt-2 font-mono text-[10px] uppercase tracking-[0.04em]"
+                    style={{ color: "var(--text-body-muted)" }}
+                  >
                     Current Price
                   </div>
                 </div>
-                
-                <div className="h-10 w-px bg-white/[0.05] hidden sm:block" />
-                
-                <div className="text-center group">
-                  <div className="text-4xl font-display font-extrabold text-accent tracking-tight transition-transform duration-500 group-hover:scale-105">
+
+                <div
+                  className="h-10 w-px hidden sm:block"
+                  style={{ backgroundColor: "var(--border-on-feature-dark)" }}
+                />
+
+                <div className="text-center">
+                  <div
+                    className="font-display font-bold tracking-tight"
+                    style={{ fontSize: "40px", color: "var(--accent-clay)" }}
+                  >
                     ∞
                   </div>
-                  <div className="mt-2 text-[10px] font-heading font-semibold uppercase tracking-[0.16em] text-text-tertiary">
+                  <div
+                    className="mt-2 font-mono text-[10px] uppercase tracking-[0.04em]"
+                    style={{ color: "var(--text-body-muted)" }}
+                  >
                     Projects
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
