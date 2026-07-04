@@ -103,6 +103,7 @@ export const getDirectoryTreeService = async (
 
   const tree = directoryTree(resolvedPath, {
     normalizePath: true,
+    exclude: /node_modules/,
   }) as DirectoryNode | null;
 
   if (!tree) {
