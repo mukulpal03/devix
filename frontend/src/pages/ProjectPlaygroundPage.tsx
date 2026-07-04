@@ -1,4 +1,4 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { PlaygroundEditor } from "@/features/editor/components/PlaygroundEditor";
 import { FileTree } from "@/features/editor/components/FileTree";
@@ -52,6 +52,7 @@ const TerminalSkeleton = () => (
 export const ProjectPlaygroundPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const { createProject } = useCreateProject();
   const [created, setCreated] = useState(!location.state?.isNew);
   const creationStartedRef = useRef(false);
@@ -59,6 +60,10 @@ export const ProjectPlaygroundPage = () => {
   useEffect(() => {
     if (location.state?.isNew && !created && !creationStartedRef.current) {
       creationStartedRef.current = true;
+      
+      // Clear location state from history immediately so reload doesn't trigger creation again
+      navigate(location.pathname, { replace: true, state: {} });
+
       createProject({ id: projectId })
         .then(() => {
           setCreated(true);
@@ -67,7 +72,7 @@ export const ProjectPlaygroundPage = () => {
           console.error("Failed to create project:", err);
         });
     }
-  }, [projectId, location.state?.isNew, created, createProject]);
+  }, [projectId, location.state?.isNew, created, createProject, navigate, location.pathname]);
 
   const { readFile } = useEditorSocket(projectId);
 
