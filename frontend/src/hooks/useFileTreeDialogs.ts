@@ -37,7 +37,8 @@ export const useFileTreeDialogs = () => {
     } else if (type === 'rename') {
       const parentPath = node.path.substring(0, node.path.lastIndexOf('/'))
       const newPath = `${parentPath}/${inputValue}`
-      const eventName = node.type === 'directory' ? 'renameDirectory' : 'renameFile'
+      const isDir = node.type === 'directory' || Array.isArray(node.children)
+      const eventName = isDir ? 'renameDirectory' : 'renameFile'
       editorSocket.emit(eventName, { pathToFileOrDir: node.path, newPath })
     }
 
@@ -47,7 +48,8 @@ export const useFileTreeDialogs = () => {
   const handleDeleteSubmit = () => {
     if (!deleteNode) return
     
-    const eventName = deleteNode.type === 'directory' ? 'deleteDirectory' : 'deleteFile'
+    const isDir = deleteNode.type === 'directory' || Array.isArray(deleteNode.children)
+    const eventName = isDir ? 'deleteDirectory' : 'deleteFile'
     editorSocket.emit(eventName, { pathToFileOrDir: deleteNode.path })
 
     closeDialogs()
