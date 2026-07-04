@@ -24,7 +24,7 @@ export const LandingNavbar = () => {
         {/* Logo / Wordmark */}
         <Link
           to="/"
-          className="font-heading text-[16px] font-bold tracking-tight transition-colors duration-200"
+          className="font-heading text-[20px] font-bold tracking-tight transition-colors duration-200"
           style={{ color: "var(--text-heading)", letterSpacing: "-0.01em" }}
         >
           devix
@@ -51,26 +51,11 @@ export const LandingNavbar = () => {
             ))}
           </nav>
 
-          {/* Primary Nav CTA — asymmetric radius signature */}
+          {/* Primary Nav CTA */}
           <button
             onClick={() => void handleCreate()}
-            className="ml-4 font-sans text-[15px] font-medium transition-all duration-200 ease-out cursor-pointer"
-            style={{
-              backgroundColor: "var(--surface-page-base)",
-              color: "var(--text-heading)",
-              border: "1px solid var(--border-brand)",
-              borderRadius: "0px 0px 8px 8px",
-              padding: "12px 31px",
-              letterSpacing: "-0.002em",
-              boxShadow: "none",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--surface-elevated)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor =
-                "var(--surface-page-base)";
-            }}
+            className="ml-4 btn-brand font-sans text-[14px] font-medium px-[20px] py-[8px]"
+            style={{ letterSpacing: "-0.002em" }}
           >
             Launch Playground
           </button>
