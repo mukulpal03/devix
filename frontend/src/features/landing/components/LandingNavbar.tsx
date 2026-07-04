@@ -28,26 +28,26 @@ export const LandingNavbar = () => {
         className={cn(
           "flex items-center gap-24 rounded-full border transition-all duration-700 p-1.5",
           scrolled 
-            ? "border-white/20 bg-white/[0.05] backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)]" 
-            : "border-white/10 bg-white/[0.02] backdrop-blur-md shadow-none"
+            ? "border-accent/25 bg-bg-secondary/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(99,102,241,0.1)]" 
+            : "border-white/8 bg-white/[0.02] backdrop-blur-md shadow-none"
         )}
       >
         {/* Left — Logo */}
         <Link 
           to="/" 
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white transition-transform hover:scale-105 active:scale-95"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] active:scale-95"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path 
               d="M6 8L10 12L6 16" 
-              stroke="black" 
+              stroke="white" 
               strokeWidth="2.5" 
               strokeLinecap="round" 
               strokeLinejoin="round" 
             />
             <path 
               d="M13 16H18" 
-              stroke="black" 
+              stroke="white" 
               strokeWidth="2.5" 
               strokeLinecap="round" 
             />
@@ -69,7 +69,7 @@ export const LandingNavbar = () => {
 
         <button 
           onClick={() => void handleCreate()}
-          className="flex h-9 items-center justify-center rounded-full bg-white px-8 text-[13px] font-bold tracking-tight text-black transition-all hover:bg-white/95 active:scale-95 shadow-sm cursor-pointer"
+          className="flex h-9 items-center justify-center rounded-full bg-accent px-8 text-[13px] font-semibold tracking-tight text-white transition-all hover:bg-accent/90 hover:shadow-[0_0_24px_rgba(99,102,241,0.35)] active:scale-95 cursor-pointer"
         >
           Launch Playground
         </button>

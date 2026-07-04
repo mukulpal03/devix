@@ -9,14 +9,14 @@ const FEATURES = [
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path
           d="M10 2L12.5 8.5H19L13.5 12.5L15.5 19L10 15L4.5 19L6.5 12.5L1 8.5H7.5L10 2Z"
-          fill="#FFFFFF"
+          fill="#6366F1"
           className="opacity-90"
         />
       </svg>
     ),
     visual: (
       <div className="font-mono text-xs leading-relaxed">
-        <div className="text-terminal-green">✓ Installing dependencies...</div>
+        <div className="text-success">✓ Installing dependencies...</div>
         <div className="text-success">✓ Configuring runtime...</div>
         <div className="text-accent">
           ✓ Environment ready{" "}
@@ -43,18 +43,18 @@ const FEATURES = [
           width="16"
           height="12"
           rx="2"
-          stroke="#FFFFFF"
+          stroke="#A78BFA"
           strokeWidth="1.5"
         />
         <path
           d="M6 8L9 11L6 14"
-          stroke="#3EFF9E"
+          stroke="#34D399"
           strokeWidth="1.5"
           strokeLinecap="round"
         />
         <path
           d="M10 14H14"
-          stroke="#6E6D6A"
+          stroke="#55556A"
           strokeWidth="1.5"
           strokeLinecap="round"
         />
@@ -71,7 +71,7 @@ const FEATURES = [
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path
           d="M3 6a2 2 0 012-2h3l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6z"
-          stroke="#FFB547"
+          stroke="#F59E0B"
           strokeWidth="1.5"
         />
       </svg>
@@ -85,11 +85,11 @@ const FEATURES = [
     copy: "Pair program in real time. Multiple cursors, shared terminals, live presence.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="7" cy="8" r="3" stroke="#FFFFFF" strokeWidth="1.5" />
-        <circle cx="13" cy="8" r="3" stroke="#999999" strokeWidth="1.5" />
+        <circle cx="7" cy="8" r="3" stroke="#E8E8ED" strokeWidth="1.5" />
+        <circle cx="13" cy="8" r="3" stroke="#8B8B9E" strokeWidth="1.5" />
         <path
           d="M2 16c0-2.2 2.23-4 5-4"
-          stroke="#5B7FFF"
+          stroke="#6366F1"
           strokeWidth="1.5"
           strokeLinecap="round"
         />
@@ -115,13 +115,13 @@ function FeatureCard({ feature }: { feature: (typeof FEATURES)[0] }) {
   return (
     <motion.div
       variants={FADE_UP_VARIANTS}
-      className="group flex flex-col gap-4 rounded-md border border-white/6 bg-bg-secondary p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-white/12"
+      className="group flex flex-col gap-4 rounded-xl border border-white/[0.06] bg-bg-secondary p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/20 hover:shadow-[0_8px_32px_rgba(99,102,241,0.06)]"
     >
-      <div className="flex h-9 w-9 items-center justify-center rounded-md border border-accent/15 bg-accent/7">
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/15 bg-accent/[0.07]">
         {feature.icon}
       </div>
       <div>
-        <h3 className="mb-1.5 font-heading text-[15px] font-medium text-text-primary">
+        <h3 className="mb-1.5 font-display text-[15px] font-semibold text-text-primary">
           {feature.label}
         </h3>
         <p className="font-heading text-sm leading-relaxed text-text-secondary">
@@ -129,7 +129,7 @@ function FeatureCard({ feature }: { feature: (typeof FEATURES)[0] }) {
         </p>
       </div>
       {feature.visual && (
-        <div className="mt-2 rounded-[4px] border border-white/5 bg-bg-deep p-4">
+        <div className="mt-2 rounded-lg border border-white/[0.04] bg-bg-deep p-4">
           {feature.visual}
         </div>
       )}
@@ -150,13 +150,13 @@ export const LandingFeatures = () => {
       >
         <motion.div
           variants={FADE_UP_VARIANTS}
-          className="mb-3 font-heading text-[12px] font-medium uppercase tracking-[0.1em] text-accent"
+          className="mb-3 font-heading text-[12px] font-semibold uppercase tracking-[0.12em] text-accent"
         >
           Everything you need
         </motion.div>
         <motion.h2
           variants={FADE_UP_VARIANTS}
-          className="mb-3 font-display text-4xl font-normal italic tracking-tight text-text-primary sm:text-5xl"
+          className="mb-3 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl"
         >
           A seamless workflow.
         </motion.h2>
@@ -181,12 +181,12 @@ export const LandingFeatures = () => {
           
           <motion.div
             variants={FADE_UP_VARIANTS}
-            className="flex flex-col items-center justify-center rounded-md border border-accent/12 bg-accent/4 p-6 text-center transition-all duration-200 hover:border-accent/25"
+            className="flex flex-col items-center justify-center rounded-xl border border-accent/12 bg-accent/[0.04] p-6 text-center transition-all duration-300 hover:border-accent/25 hover:shadow-[0_4px_24px_rgba(99,102,241,0.06)]"
           >
-            <div className="mb-1 font-display text-3xl font-normal italic text-accent">
+            <div className="mb-1 font-display text-3xl font-bold text-accent">
               ∞
             </div>
-            <div className="font-heading text-sm font-medium text-text-primary">
+            <div className="font-display text-sm font-semibold text-text-primary">
               Unlimited Projects
             </div>
             <div className="mt-1 font-heading text-[12px] text-text-secondary leading-tight">

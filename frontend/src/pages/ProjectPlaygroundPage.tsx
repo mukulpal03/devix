@@ -16,21 +16,21 @@ const FileTreeSkeleton = () => (
   <div className="flex flex-col gap-2.5 p-4 animate-pulse">
     {[1, 2, 3, 4, 5, 6].map((i) => (
       <div key={i} className="flex items-center gap-2">
-        <div className={`h-3.5 rounded bg-white/5 ${i % 3 === 0 ? 'w-3.5' : 'w-4'}`} />
-        <div className={`h-3 rounded bg-white/5 ${i === 1 ? 'w-24' : i === 2 ? 'w-32' : i === 3 ? 'w-16' : 'w-28'}`} />
+        <div className={`h-3.5 rounded bg-white/[0.04] ${i % 3 === 0 ? 'w-3.5' : 'w-4'}`} />
+        <div className={`h-3 rounded bg-white/[0.04] ${i === 1 ? 'w-24' : i === 2 ? 'w-32' : i === 3 ? 'w-16' : 'w-28'}`} />
       </div>
     ))}
   </div>
 );
 
 const EditorSkeleton = () => (
-  <div className="flex h-full w-full flex-col items-center justify-center bg-[#0E0E11] text-text-tertiary select-none">
+  <div className="flex h-full w-full flex-col items-center justify-center bg-bg-editor text-text-tertiary select-none">
     <div className="flex flex-col items-center gap-4">
       <div className="relative flex h-12 w-12 items-center justify-center">
-        <div className="absolute inset-0 rounded-full border-2 border-white/5 border-t-accent animate-spin" />
+        <div className="absolute inset-0 rounded-full border-2 border-white/[0.04] border-t-accent animate-spin" />
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 8L10 12L6 16" stroke="#5B7FFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M13 16H18" stroke="#5B7FFF" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M6 8L10 12L6 16" stroke="#6366F1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13 16H18" stroke="#6366F1" strokeWidth="2.5" strokeLinecap="round" />
         </svg>
       </div>
       <div className="flex flex-col items-center gap-1">
@@ -42,12 +42,12 @@ const EditorSkeleton = () => (
 );
 
 const TerminalSkeleton = () => (
-  <div className="flex-1 bg-[#09090b] p-4 font-mono text-[11px] leading-relaxed text-text-secondary select-none">
+  <div className="flex-1 bg-bg-deep p-4 font-mono text-[11px] leading-relaxed text-text-secondary select-none">
     <div className="flex items-center gap-2 text-text-tertiary mb-2">
       <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
       <span>System bootstrapping sequence initiated...</span>
     </div>
-    <div className="text-white/20">Waiting for sandbox terminal socket connection...</div>
+    <div className="text-white/15">Waiting for sandbox terminal socket connection...</div>
   </div>
 );
 
@@ -119,9 +119,9 @@ export const ProjectPlaygroundPage = () => {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="flex w-60 shrink-0 flex-col border-r border-white/6 bg-bg-editor">
+        <aside className="flex w-60 shrink-0 flex-col border-r border-white/[0.05] bg-bg-editor">
           {/* Explorer Header */}
-          <div className="flex h-9 items-center justify-between px-3 border-b border-white/4">
+          <div className="flex h-9 items-center justify-between px-3 border-b border-white/[0.04]">
             <span className="font-heading text-[11px] font-medium uppercase tracking-[0.08em] text-text-tertiary">
               Explorer
             </span>
@@ -130,7 +130,7 @@ export const ProjectPlaygroundPage = () => {
                 onClick={handleCreateFileFromHeader}
                 disabled={!data?.tree}
                 title="New File"
-                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary disabled:opacity-50"
+                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/[0.05] hover:text-text-primary disabled:opacity-50"
               >
                 <FilePlus size={14} />
               </button>
@@ -138,7 +138,7 @@ export const ProjectPlaygroundPage = () => {
                 onClick={handleCreateFolderFromHeader}
                 disabled={!data?.tree}
                 title="New Folder"
-                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/5 hover:text-text-primary disabled:opacity-50"
+                className="rounded-sm p-1 text-text-tertiary transition-colors hover:bg-white/[0.05] hover:text-text-primary disabled:opacity-50"
               >
                 <FolderPlus size={14} />
               </button>
@@ -178,7 +178,7 @@ export const ProjectPlaygroundPage = () => {
           </div>
 
           {/* Resize handle (Visual Decor) */}
-          <div className="group h-1 w-full shrink-0 cursor-row-resize bg-white/4 transition-colors hover:bg-accent/40" />
+          <div className="group h-1 w-full shrink-0 cursor-row-resize bg-white/[0.04] transition-colors hover:bg-accent/40" />
 
           {/* Terminal */}
           <div className="flex-1 flex min-h-0 overflow-hidden">

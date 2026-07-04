@@ -21,30 +21,30 @@ loader.init().then((monaco) => {
       { token: "variable", foreground: "EEFFFF" },
     ],
     colors: {
-      "editor.background": "#0E0E11",
-      "editor.foreground": "#EEFFFF",
-      "editorLineNumber.foreground": "#3E3D3B",
-      "editorLineNumber.activeForeground": "#6E6D6A",
-      "editor.lineHighlightBackground": "#ffffff06",
-      "editor.selectionBackground": "#5B7FFF33",
-      "editor.inactiveSelectionBackground": "#5B7FFF1A",
-      "editorCursor.foreground": "#5B7FFF",
-      "editor.findMatchBackground": "#5B7FFF44",
-      "editorWidget.background": "#111114",
-      "editorWidget.border": "#ffffff10",
-      "editorSuggestWidget.background": "#111114",
-      "editorSuggestWidget.border": "#ffffff10",
-      "editorSuggestWidget.selectedBackground": "#5B7FFF20",
+      "editor.background": "#0C0C12",
+      "editor.foreground": "#E8E8ED",
+      "editorLineNumber.foreground": "#3A3A50",
+      "editorLineNumber.activeForeground": "#6366F1",
+      "editor.lineHighlightBackground": "#6366F108",
+      "editor.selectionBackground": "#6366F133",
+      "editor.inactiveSelectionBackground": "#6366F11A",
+      "editorCursor.foreground": "#6366F1",
+      "editor.findMatchBackground": "#6366F144",
+      "editorWidget.background": "#111118",
+      "editorWidget.border": "#ffffff0A",
+      "editorSuggestWidget.background": "#111118",
+      "editorSuggestWidget.border": "#ffffff0A",
+      "editorSuggestWidget.selectedBackground": "#6366F120",
       "scrollbar.shadow": "transparent",
-      "scrollbarSlider.background": "#ffffff12",
-      "scrollbarSlider.hoverBackground": "#ffffff20",
-      "tab.activeBackground": "#0E0E11",
-      "tab.inactiveBackground": "#0A0A0B",
-      "tab.border": "#ffffff08",
-      "editorGutter.background": "#0E0E11",
-      "minimap.background": "#0E0E11",
-      "editorStickyScroll.background": "#0E0E11",
-      "editorStickyScroll.border": "#ffffff08",
+      "scrollbarSlider.background": "#6366F115",
+      "scrollbarSlider.hoverBackground": "#6366F125",
+      "tab.activeBackground": "#0C0C12",
+      "tab.inactiveBackground": "#08080C",
+      "tab.border": "#ffffff07",
+      "editorGutter.background": "#0C0C12",
+      "minimap.background": "#0C0C12",
+      "editorStickyScroll.background": "#0C0C12",
+      "editorStickyScroll.border": "#ffffff07",
       "editorStickyScroll.shadow": "#00000000",
     },
   });
@@ -133,8 +133,8 @@ export const PlaygroundEditor = () => {
       ) : (
         <div className="flex h-full items-center justify-center bg-bg-editor">
           <div className="flex flex-col items-center gap-3 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-md border border-white/6 bg-white/3">
-              <File className="h-5.5 w-5.5 text-text-tertiary" strokeWidth={1.5} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-accent/15 bg-accent/[0.06]">
+              <File className="h-5.5 w-5.5 text-accent/50" strokeWidth={1.5} />
             </div>
             <span className="font-heading text-[13px] text-text-tertiary">
               Select a file from the explorer to begin.

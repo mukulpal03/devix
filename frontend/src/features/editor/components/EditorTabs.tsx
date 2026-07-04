@@ -19,7 +19,7 @@ export const EditorTabs = ({
 }: EditorTabsProps) => {
   return (
     <div
-      className="scrollbar-hide flex h-8 w-full items-end overflow-x-auto border-b border-white/6 bg-bg-primary"
+      className="scrollbar-hide flex h-8 w-full items-end overflow-x-auto border-b border-white/[0.05] bg-bg-primary"
     >
       <AnimatePresence mode="popLayout" initial={false}>
         {tabs.map((tab) => {
@@ -32,8 +32,8 @@ export const EditorTabs = ({
               role="button"
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2 border-r border-white/5 px-3 font-heading text-[13px] transition-colors duration-150",
-                isActive ? "bg-bg-editor text-text-primary" : "text-text-secondary hover:bg-white/3 hover:text-white/80"
+                "group relative flex h-8 min-w-[120px] max-w-[180px] shrink-0 items-center justify-between gap-2 border-r border-white/[0.04] px-3 font-heading text-[13px] transition-colors duration-150",
+                isActive ? "bg-bg-editor text-text-primary" : "text-text-secondary hover:bg-white/[0.03] hover:text-white/80"
               )}
             >
               <div className="flex min-w-0 items-center gap-1.5 overflow-hidden">
@@ -52,7 +52,7 @@ export const EditorTabs = ({
                   }}
                   className={cn(
                     "flex shrink-0 items-center rounded-sm p-0.5 transition-all duration-100",
-                    isActive ? "text-text-secondary opacity-100" : "text-transparent opacity-0 group-hover:text-text-secondary group-hover:opacity-100 hover:bg-white/8 hover:text-text-primary"
+                    isActive ? "text-text-secondary opacity-100" : "text-transparent opacity-0 group-hover:text-text-secondary group-hover:opacity-100 hover:bg-white/[0.06] hover:text-text-primary"
                   )}
                 >
                   <X size={12} />

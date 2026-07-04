@@ -14,7 +14,7 @@ const STEPS = [
   },
   {
     number: '03',
-    label: 'Build and Iterates',
+    label: 'Build and iterate',
     copy: 'Use the playground to prototype ideas and test code instantly.',
   },
 ]
@@ -25,7 +25,7 @@ const FADE_UP_VARIANTS = {
 }
 
 export const LandingHowItWorks = () => (
-  <section className="border-y border-white/5 bg-bg-primary py-24 px-6">
+  <section className="border-y border-white/[0.05] bg-bg-primary py-24 px-6">
     <div className="mx-auto max-w-[1100px]">
       {/* Header */}
       <motion.div
@@ -37,60 +37,52 @@ export const LandingHowItWorks = () => (
       >
         <motion.div
           variants={FADE_UP_VARIANTS}
-          className="mb-3 font-heading text-[12px] font-medium uppercase tracking-[0.1em] text-accent"
+          className="mb-3 font-heading text-[12px] font-semibold uppercase tracking-[0.12em] text-accent"
         >
           How it works
         </motion.div>
         <motion.h2
           variants={FADE_UP_VARIANTS}
-          className="font-display text-4xl font-normal italic tracking-tight text-text-primary sm:text-[44px]"
+          className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-[44px]"
         >
           From zero to shipped in minutes.
         </motion.h2>
       </motion.div>
 
-      {/* Steps */}
+      {/* Steps — Vertical build-log layout */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ staggerChildren: 0.15 }}
-        className="flex flex-col items-center justify-center gap-12 sm:flex-row sm:items-start sm:gap-0"
+        transition={{ staggerChildren: 0.2 }}
+        className="mx-auto max-w-[640px]"
       >
         {STEPS.map((step, i) => (
           <React.Fragment key={step.number}>
             <motion.div
               variants={FADE_UP_VARIANTS}
-              className="relative flex-1 px-6 text-center"
+              className="relative flex gap-5"
             >
-              {/* Big background number */}
-              <div className="pointer-events-none absolute top-[-12px] left-1/2 -translate-x-1/2 select-none font-mono text-[64px] font-medium leading-none text-text-primary opacity-[0.06]">
-                {step.number}
+              {/* Timeline line + dot */}
+              <div className="flex flex-col items-center">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 font-display text-[13px] font-semibold text-accent">
+                  {i + 1}
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div className="w-px flex-1 bg-gradient-to-b from-accent/20 to-transparent my-2" />
+                )}
               </div>
 
-              {/* Step number pill */}
-              <div className="mb-5 inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/30 bg-accent/10 font-heading text-[12px] text-accent">
-                {i + 1}
+              {/* Content */}
+              <div className={i < STEPS.length - 1 ? "pb-10" : "pb-0"}>
+                <h3 className="mb-1.5 font-display text-base font-semibold text-text-primary">
+                  {step.label}
+                </h3>
+                <p className="font-heading text-sm font-normal leading-relaxed text-text-secondary">
+                  {step.copy}
+                </p>
               </div>
-
-              <h3 className="mb-2 font-heading text-base font-medium text-text-primary">
-                {step.label}
-              </h3>
-              <p className="font-heading text-sm font-normal leading-relaxed text-text-secondary">
-                {step.copy}
-              </p>
             </motion.div>
-
-            {/* Connector — hidden on mobile, shown on sm+ */}
-            {i < STEPS.length - 1 && (
-              <motion.div
-                variants={{
-                  hidden: { scaleX: 0, opacity: 0 },
-                  visible: { scaleX: 1, opacity: 1 },
-                }}
-                className="hidden h-px w-20 origin-left border-t border-dashed border-white/10 sm:block sm:self-start sm:mt-4"
-              />
-            )}
           </React.Fragment>
         ))}
       </motion.div>

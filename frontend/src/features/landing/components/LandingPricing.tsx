@@ -20,13 +20,13 @@ export const LandingPricing = () => {
         >
           <motion.div
             variants={FADE_UP_VARIANTS}
-            className="mb-3 font-heading text-[12px] font-medium uppercase tracking-[0.1em] text-accent"
+            className="mb-3 font-heading text-[12px] font-semibold uppercase tracking-[0.12em] text-accent"
           >
             Pricing
           </motion.div>
           <motion.h2
             variants={FADE_UP_VARIANTS}
-            className="mb-3 font-display text-4xl font-normal italic tracking-tight text-text-primary sm:text-[44px]"
+            className="mb-3 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-[44px]"
           >
             Simple pricing, no surprises.
           </motion.h2>
@@ -44,15 +44,15 @@ export const LandingPricing = () => {
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative overflow-hidden rounded-lg border border-white/10 bg-bg-secondary p-12 text-center"
+          className="relative overflow-hidden rounded-xl border border-white/[0.07] bg-bg-secondary p-12 text-center"
         >
-          <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
+          <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.04)_0%,transparent_70%)]" />
 
           <div className="relative z-10 mx-auto max-w-lg">
-            <Badge className="mb-6 bg-accent/20 text-accent border-accent/20 px-3 py-1 text-xs">
+            <Badge className="mb-6 bg-accent/15 text-accent border-accent/20 px-3 py-1 text-xs font-medium">
               Phase 1: Alpha
             </Badge>
-            <h3 className="mb-4 font-display text-3xl font-normal italic text-text-primary">
+            <h3 className="mb-4 font-display text-3xl font-bold text-text-primary">
               Pricing is coming soon.
             </h3>
             <p className="mb-8 font-heading text-base leading-relaxed text-text-secondary">
@@ -61,22 +61,22 @@ export const LandingPricing = () => {
               <span className="text-text-primary">collaborative editing</span>{" "}
               while we build the most powerful browser-based IDE.
             </p>
-            <div className="h-px w-full bg-white/10 mb-8" />
+            <div className="h-px w-full bg-white/[0.06] mb-8" />
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
               <div className="text-center">
-                <div className="text-2xl font-display italic text-text-primary">
+                <div className="text-2xl font-display font-bold text-text-primary">
                   $0
                 </div>
-                <div className="text-xs font-heading uppercase tracking-widest text-text-tertiary">
+                <div className="text-xs font-heading font-medium uppercase tracking-widest text-text-tertiary">
                   Current Price
                 </div>
               </div>
-              <div className="h-8 w-px bg-white/10 hidden sm:block" />
+              <div className="h-8 w-px bg-white/[0.06] hidden sm:block" />
               <div className="text-center">
-                <div className="text-2xl font-display italic text-text-primary">
+                <div className="text-2xl font-display font-bold text-accent">
                   ∞
                 </div>
-                <div className="text-xs font-heading uppercase tracking-widest text-text-tertiary">
+                <div className="text-xs font-heading font-medium uppercase tracking-widest text-text-tertiary">
                   Projects
                 </div>
               </div>

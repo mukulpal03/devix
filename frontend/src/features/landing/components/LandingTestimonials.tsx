@@ -6,7 +6,7 @@ const TESTIMONIALS = [
     name: "Sarah Chen",
     role: "Engineering Lead @ Anthropic",
     initials: "SC",
-    color: "#5B7FFF",
+    color: "#6366F1",
   },
   {
     quote: "The terminal is actually usable. Not a toy. Real bash, real output. I run my full build pipeline from it.",
@@ -20,21 +20,21 @@ const TESTIMONIALS = [
     name: "Priya Nair",
     role: "Indie Hacker",
     initials: "PN",
-    color: "#2DD98F",
+    color: "#34D399",
   },
   {
     quote: "Our team uses Devix for interview rounds. Candidates get a real environment, we get signal. Game changer.",
     name: "Alex Rivera",
     role: "CTO @ Vercel",
     initials: "AR",
-    color: "#FFB547",
+    color: "#F59E0B",
   },
   {
     quote: "Collaborative editing with live presence is exactly what pair programming should feel like.",
     name: "James Wu",
     role: "Staff Eng @ Linear",
     initials: "JW",
-    color: "#5B7FFF",
+    color: "#6366F1",
   },
   {
     quote: "Deploy from the terminal straight to Railway. The workflow is so clean it feels like cheating.",
@@ -54,7 +54,7 @@ function TestimonialCard({ t }: { t: typeof TESTIMONIALS[0] }) {
   return (
     <motion.div
       variants={FADE_UP_VARIANTS}
-      className="mb-3 break-inside-avoid rounded-md border border-white/6 bg-bg-secondary p-5"
+      className="mb-3 break-inside-avoid rounded-xl border border-white/[0.06] bg-bg-secondary p-5 transition-all duration-300 hover:border-accent/15"
     >
       <p className="mb-4 font-heading text-[15px] leading-relaxed text-text-primary">
         <span className="text-xl leading-none text-accent">"</span>
@@ -94,13 +94,13 @@ export const LandingTestimonials = () => {
       >
         <motion.div
           variants={FADE_UP_VARIANTS}
-          className="mb-3 font-heading text-[12px] font-medium uppercase tracking-[0.1em] text-accent"
+          className="mb-3 font-heading text-[12px] font-semibold uppercase tracking-[0.12em] text-accent"
         >
           Loved by builders
         </motion.div>
         <motion.h2
           variants={FADE_UP_VARIANTS}
-          className="font-display text-4xl font-normal italic tracking-tight text-text-primary sm:text-[44px]"
+          className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-[44px]"
         >
           What engineers say.
         </motion.h2>

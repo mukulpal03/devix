@@ -53,10 +53,10 @@ export const FileTreeDialogs = ({
   return (
     <>
       <Dialog open={dialogState.type !== null} onOpenChange={(open) => !open && closeDialogs()}>
-        <DialogContent className="sm:max-w-[425px] bg-bg-elevated border-white/10 text-text-primary">
+        <DialogContent className="sm:max-w-[425px] bg-bg-elevated border-white/[0.07] text-text-primary">
           <form onSubmit={handleDialogSubmit}>
             <DialogHeader>
-              <DialogTitle className="font-heading text-lg font-medium text-text-primary">
+              <DialogTitle className="font-display text-lg font-semibold text-text-primary">
                 {getDialogTitle()}
               </DialogTitle>
             </DialogHeader>
@@ -70,7 +70,7 @@ export const FileTreeDialogs = ({
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   autoFocus
-                  className="h-9 bg-bg-primary border-white/8 text-sm focus:ring-accent/50"
+                  className="h-9 bg-bg-primary border-white/[0.07] text-sm focus:ring-accent/50"
                   placeholder={dialogState.type === 'createFolder' ? 'new-folder' : 'new-file.ts'}
                 />
               </div>
@@ -80,13 +80,13 @@ export const FileTreeDialogs = ({
                 type="button" 
                 variant="outline" 
                 onClick={closeDialogs}
-                className="h-9 rounded-[4px] border-white/6 bg-transparent text-text-secondary hover:bg-white/4 hover:text-text-primary"
+                className="h-9 rounded-md border-white/[0.06] bg-transparent text-text-secondary hover:bg-white/[0.04] hover:text-text-primary"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit"
-                className="h-9 rounded-[4px] bg-accent text-white hover:opacity-90 border-none"
+                className="h-9 rounded-md bg-accent text-white hover:bg-accent/90 border-none"
               >
                 Confirm
               </Button>
@@ -96,9 +96,9 @@ export const FileTreeDialogs = ({
       </Dialog>
 
       <AlertDialog open={deleteNode !== null} onOpenChange={(open) => !open && closeDialogs()}>
-        <AlertDialogContent className="bg-bg-elevated border-white/10 text-text-primary">
+        <AlertDialogContent className="bg-bg-elevated border-white/[0.07] text-text-primary">
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-heading text-lg font-medium text-text-primary">
+            <AlertDialogTitle className="font-display text-lg font-semibold text-text-primary">
               Are you absolutely sure?
             </AlertDialogTitle>
             <AlertDialogDescription className="font-heading text-sm text-text-secondary">
@@ -106,12 +106,12 @@ export const FileTreeDialogs = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2 sm:gap-0">
-            <AlertDialogCancel className="h-9 rounded-[4px] border-white/6 bg-transparent text-text-secondary hover:bg-white/4 hover:text-text-primary">
+            <AlertDialogCancel className="h-9 rounded-md border-white/[0.06] bg-transparent text-text-secondary hover:bg-white/[0.04] hover:text-text-primary">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDeleteSubmit} 
-              className="h-9 rounded-[4px] bg-error text-white hover:bg-error/90 border-none px-6"
+              className="h-9 rounded-md bg-error text-white hover:bg-error/90 border-none px-6"
             >
               Delete
             </AlertDialogAction>

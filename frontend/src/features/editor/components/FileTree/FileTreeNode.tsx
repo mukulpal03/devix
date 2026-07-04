@@ -43,7 +43,7 @@ export const FileTreeNode = ({
       onClick={handleClick}
       className={cn(
         "flex w-full items-center gap-1.5 py-0.5 pr-2 text-left text-[13px] font-heading",
-        "text-text-secondary hover:bg-white/4 hover:text-text-primary cursor-pointer transition-colors outline-none",
+        "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary cursor-pointer transition-colors outline-none",
       )}
       style={{ paddingLeft: `${depth * 12 + 12}px` }}
     >
@@ -67,7 +67,7 @@ export const FileTreeNode = ({
     <div>
       <ContextMenu>
         <ContextMenuTrigger>{TreeElement}</ContextMenuTrigger>
-        <ContextMenuContent className="min-w-[160px] bg-bg-elevated border-white/8 text-text-primary">
+        <ContextMenuContent className="min-w-[160px] bg-bg-elevated border-white/[0.07] text-text-primary">
           {isDirectory ? (
             <>
               <ContextMenuItem onClick={() => onContextMenuAction?.('createFile', node)} className="text-[13px]">
@@ -76,7 +76,7 @@ export const FileTreeNode = ({
               <ContextMenuItem onClick={() => onContextMenuAction?.('createFolder', node)} className="text-[13px]">
                 New Folder
               </ContextMenuItem>
-              <ContextMenuSeparator className="bg-white/5" />
+              <ContextMenuSeparator className="bg-white/[0.05]" />
             </>
           ) : null}
           <ContextMenuItem onClick={() => onContextMenuAction?.('rename', node)} className="text-[13px]">

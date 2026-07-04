@@ -48,29 +48,29 @@ const SOCIAL_ICONS = [
 ]
 
 export const LandingFooter = () => (
-  <footer className="border-t border-white/6 bg-bg-primary">
+  <footer className="border-t border-white/[0.05] bg-bg-primary">
     <div className="mx-auto grid max-w-[1100px] gap-12 px-6 pt-16 pb-12 sm:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
       {/* Brand */}
       <div className="flex flex-col gap-4">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path 
                 d="M6 8L10 12L6 16" 
-                stroke="black" 
+                stroke="white" 
                 strokeWidth="2.5" 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
               />
               <path 
                 d="M13 16H18" 
-                stroke="black" 
+                stroke="white" 
                 strokeWidth="2.5" 
                 strokeLinecap="round" 
               />
             </svg>
           </div>
-          <span className="font-heading text-base font-semibold text-text-primary">devix</span>
+          <span className="font-display text-base font-semibold text-text-primary">devix</span>
         </Link>
         <p className="max-w-[200px] font-heading text-[13px] leading-relaxed text-text-tertiary">
           A full development environment in your browser. No setup required.
@@ -81,7 +81,7 @@ export const LandingFooter = () => (
       <div className="flex gap-16 sm:gap-24">
         {COLUMNS.map((col) => (
           <div key={col.label}>
-            <h4 className="mb-4 font-heading text-[12px] font-medium tracking-wide text-text-primary uppercase opacity-50">
+            <h4 className="mb-4 font-heading text-[12px] font-semibold tracking-wide text-text-secondary uppercase">
               {col.label}
             </h4>
             <ul className="flex flex-col gap-2.5">
@@ -102,7 +102,7 @@ export const LandingFooter = () => (
     </div>
 
     {/* Bottom row */}
-    <div className="mx-auto flex max-w-[1100px] items-center justify-between border-t border-white/4 px-6 py-5">
+    <div className="mx-auto flex max-w-[1100px] items-center justify-between border-t border-white/[0.04] px-6 py-5">
       <span className="font-heading text-[13px] text-text-tertiary">
         © 2026 Devix. All rights reserved.
       </span>
@@ -112,7 +112,7 @@ export const LandingFooter = () => (
             key={label}
             href={href}
             aria-label={label}
-            className="text-text-tertiary transition-colors hover:text-text-primary"
+            className="text-text-tertiary transition-colors hover:text-accent"
           >
             {icon}
           </a>

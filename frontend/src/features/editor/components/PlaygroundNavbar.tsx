@@ -6,7 +6,7 @@ interface PlaygroundNavbarProps {
 
 export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
   return (
-    <header className="z-20 flex h-10 w-full shrink-0 items-center justify-between border-b border-white/7 bg-bg-primary px-3">
+    <header className="z-20 flex h-10 w-full shrink-0 items-center justify-between border-b border-white/[0.06] bg-bg-primary px-3">
       {/* Left — Logo + Breadcrumb */}
       <div className="flex items-center gap-3">
         <Link
@@ -22,7 +22,7 @@ export const PlaygroundNavbar = ({ projectId }: PlaygroundNavbarProps) => {
           </svg>
         </Link>
 
-        <div className="h-4 w-px bg-white/7" />
+        <div className="h-4 w-px bg-white/[0.06]" />
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-1 font-heading text-[13px]">

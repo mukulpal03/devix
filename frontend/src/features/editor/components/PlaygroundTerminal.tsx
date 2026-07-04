@@ -37,25 +37,25 @@ export const PlaygroundTerminal = () => {
       fontWeight: "normal",
       lineHeight: 1.5,
       theme: {
-        background: "#080809",
-        foreground: "#F0EEE8",
-        cursor: "#3EFF9E",
-        cursorAccent: "#080809",
-        selectionBackground: "rgba(91,127,255,0.25)",
+        background: "#06060A",
+        foreground: "#E8E8ED",
+        cursor: "#F59E0B",
+        cursorAccent: "#06060A",
+        selectionBackground: "rgba(99,102,241,0.25)",
         // ANSI colors
-        black: "#0A0A0B",
-        red: "#FF5757",
-        green: "#2DD98F",
-        yellow: "#FFB547",
-        blue: "#5B7FFF",
-        magenta: "#C792EA",
+        black: "#08080C",
+        red: "#EF4444",
+        green: "#34D399",
+        yellow: "#F59E0B",
+        blue: "#6366F1",
+        magenta: "#A78BFA",
         cyan: "#89DDFF",
-        white: "#F0EEE8",
-        brightBlack: "#6E6D6A",
-        brightRed: "#FF5757",
-        brightGreen: "#3EFF9E",
-        brightYellow: "#FFB547",
-        brightBlue: "#82AAFF",
+        white: "#E8E8ED",
+        brightBlack: "#55556A",
+        brightRed: "#EF4444",
+        brightGreen: "#34D399",
+        brightYellow: "#F59E0B",
+        brightBlue: "#818CF8",
         brightMagenta: "#A78BFA",
         brightCyan: "#89DDFF",
         brightWhite: "#FFFFFF",
@@ -96,9 +96,9 @@ export const PlaygroundTerminal = () => {
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-bg-deep">
       {/* Terminal tab bar */}
-      <div className="flex h-7 shrink-0 items-center justify-between border-b border-white/5 bg-bg-deep px-3">
+      <div className="flex h-7 shrink-0 items-center justify-between border-b border-white/[0.04] bg-bg-deep px-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-5 items-center gap-1.5 rounded-[3px] border border-white/6 bg-white/4 px-2">
+          <div className="flex h-5 items-center gap-1.5 rounded-[3px] border border-white/[0.06] bg-white/[0.03] px-2">
             <span
               className={cn(
                 "h-1.5 w-1.5 rounded-full shrink-0",
@@ -114,7 +114,7 @@ export const PlaygroundTerminal = () => {
         {/* + new terminal */}
         <button
           title="New Terminal"
-          className="flex items-center rounded-sm p-0.5 text-text-tertiary transition-colors hover:text-text-primary hover:bg-white/5"
+          className="flex items-center rounded-sm p-0.5 text-text-tertiary transition-colors hover:text-text-primary hover:bg-white/[0.05]"
         >
           <Plus size={13} />
         </button>
