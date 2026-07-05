@@ -21,7 +21,7 @@ export const globalApiLimiter = rateLimit({
  */
 export const projectCreationLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5,
+  max: 15,
   message: {
     status: 429,
     message: "Too many projects created from this IP, please try again after an hour",
