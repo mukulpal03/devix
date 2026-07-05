@@ -16,7 +16,6 @@ proxy.on("error", (err, req, res) => {
   }
 });
 
-// UUID v4 regex
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export const previewProxyMiddleware = async (
