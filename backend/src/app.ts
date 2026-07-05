@@ -6,14 +6,17 @@ import {
   globalErrorHandler,
   notFoundHandler,
 } from "./middlewares/error-handler";
-
 import { globalApiLimiter } from "./middlewares/rate-limit";
+import { previewProxyMiddleware } from "./middlewares/preview-proxy";
 
 const app = express();
 
+app.use(cors());
+
+app.use(previewProxyMiddleware);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 app.use("/api", globalApiLimiter, apiRouter);
 app.use("/health", healthRouter);

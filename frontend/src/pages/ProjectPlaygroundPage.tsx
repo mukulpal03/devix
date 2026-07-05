@@ -144,7 +144,10 @@ const TerminalSkeleton = () => (
       className="flex-1 p-4 font-mono text-[11px] leading-relaxed select-none"
       style={{ backgroundColor: "#141413", color: "#87867F" }}
     >
-      <div className="flex items-center gap-2 mb-3" style={{ color: "#87867F" }}>
+      <div
+        className="flex items-center gap-2 mb-3"
+        style={{ color: "#87867F" }}
+      >
         <span
           className="h-[3px] w-[3px]"
           style={{ backgroundColor: "#D97757" }}
@@ -153,21 +156,32 @@ const TerminalSkeleton = () => (
           Bootstrapping
         </span>
       </div>
-      <div className="flex flex-col gap-1.5" style={{ color: "rgba(250, 249, 245, 0.45)" }}>
+      <div
+        className="flex flex-col gap-1.5"
+        style={{ color: "rgba(250, 249, 245, 0.45)" }}
+      >
         <div className="flex items-center gap-1.5 animate-pulse">
           <span className="text-[#788C5D]">&gt;</span>
           <span>Preparing build environment...</span>
         </div>
-        <div className="flex items-center gap-1.5 animate-pulse" style={{ animationDelay: "150ms" }}>
+        <div
+          className="flex items-center gap-1.5 animate-pulse"
+          style={{ animationDelay: "150ms" }}
+        >
           <span className="text-[#87867F]">...</span>
           <span>Loading workspace volumes...</span>
         </div>
-        <div className="flex items-center gap-1.5 animate-pulse" style={{ animationDelay: "300ms" }}>
+        <div
+          className="flex items-center gap-1.5 animate-pulse"
+          style={{ animationDelay: "300ms" }}
+        >
           <span className="text-[#87867F]">...</span>
           <span>Establishing secure shell tunnel...</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="text-[#FAF9F5]/40">Waiting for sandbox terminal socket connection</span>
+          <span className="text-[#FAF9F5]/40">
+            Waiting for sandbox terminal socket connection
+          </span>
           <span className="inline-block w-1.5 h-3 bg-[#FAF9F5]/40 animate-blink ml-1" />
         </div>
       </div>
@@ -251,7 +265,7 @@ export const ProjectPlaygroundPage = () => {
         color: "var(--text-heading)",
       }}
     >
-      <PlaygroundNavbar projectId={projectId ?? ""} />
+      <PlaygroundNavbar projectId={projectId ?? ""} isReady={created} />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar — warm ivory surface */}

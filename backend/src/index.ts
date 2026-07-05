@@ -7,6 +7,7 @@ import { DockerService } from "./services/docker";
 import { IdleContainerReaper } from "./services/reaper";
 import { WatcherReaper } from "./socket/watcher-reaper";
 import { TemplateService } from "./services/templates";
+import { handleUpgrade } from "./middlewares/preview-proxy";
 
 process.on("uncaughtException", (err) => {
   console.error("[CRITICAL] Uncaught Exception:", err);
@@ -24,6 +25,12 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 const server = createServer(app);
+
+server.on("upgrade", async (req, socket, head) => {
+  const handled = await handleUpgrade(req, socket, head);
+  if (handled) return;
+  // If not handled by proxy, let Socket.IO or other handlers process it
+});
 
 initSocket(server);
 

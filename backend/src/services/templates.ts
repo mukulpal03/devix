@@ -70,6 +70,20 @@ export class TemplateService {
       }
     }
 
+    // Step 2.5: Patch package.json to ensure Vite exposes the server to the Docker network
+    try {
+      const pkgPath = path.join(templatePath, "package.json");
+      const pkgRaw = await fs.readFile(pkgPath, "utf-8");
+      const pkg = JSON.parse(pkgRaw);
+      if (pkg.scripts?.dev && !pkg.scripts.dev.includes("--host")) {
+        pkg.scripts.dev = `${pkg.scripts.dev} --host`;
+        await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+        console.log("[TemplateService] Patched template package.json with --host");
+      }
+    } catch (err) {
+      console.warn("[TemplateService] Could not patch package.json:", err);
+    }
+
     // Step 3: Run npm install inside container to create Linux-compatible node_modules
     console.log("[TemplateService] Running npm install in container...");
     await this.runInContainer("npm install");
