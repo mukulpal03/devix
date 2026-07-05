@@ -31,7 +31,7 @@ export const LandingBottomCta = () => (
         className="btn-brand font-sans text-[15px] font-medium px-[31px] py-[12px]"
         style={{ letterSpacing: '-0.002em' }}
       >
-        Launch Playground
+        Back to Top
       </button>
     </div>
   </section>

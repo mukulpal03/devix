@@ -2,141 +2,44 @@ export const LandingPricing = () => {
   return (
     <section
       id="pricing"
-      className="px-6"
+      className="px-6 border-t border-[var(--border-default-subtle)]"
       style={{
         backgroundColor: "var(--surface-page-base)",
-        paddingTop: "84px",
-        paddingBottom: "84px",
       }}
     >
-      <div className="mx-auto max-w-[1200px]">
-        {/* Header */}
-        <div className="mb-12" style={{ maxWidth: "560px" }}>
-          <div
-            className="mb-4 font-mono text-[12px] font-normal uppercase tracking-[0.04em]"
-            style={{ color: "var(--text-body-muted)" }}
-          >
-            Pricing
-          </div>
-          <h2
-            className="mb-4 font-display font-semibold tracking-tight"
-            style={{
-              fontSize: "clamp(28px, 4vw, 40px)",
-              color: "var(--text-heading)",
-              letterSpacing: "-0.01em",
-              lineHeight: "1.15",
-            }}
-          >
-            Simple pricing, no surprises.
-          </h2>
-          <p
-            className="font-sans text-[18px] leading-[1.4]"
-            style={{ color: "var(--text-body)", letterSpacing: "-0.002em" }}
-          >
-            Start free. Scale when you need to.
-          </p>
+      <div className="mx-auto w-full max-w-[1200px] flex flex-col md:flex-row py-24 md:py-32 items-start gap-12 md:gap-24">
+        
+        {/* Left: Metadata & Title */}
+        <div className="w-full md:w-1/3 flex flex-col items-start">
+           <div className="font-mono text-[13px] font-medium uppercase tracking-[0.06em] text-[var(--text-body-muted)] mb-6">
+             Phase 1 // Alpha
+           </div>
+           <h2 className="font-display text-[48px] md:text-[64px] font-semibold leading-[1.1] tracking-tight" style={{ color: "var(--text-heading)" }}>
+             Pricing
+           </h2>
         </div>
 
-        {/* Dark Editorial Feature Card — pricing content */}
-        <div
-          className="text-center"
-          style={{
-            backgroundColor: "var(--surface-feature-dark)",
-            borderRadius: "24px",
-            padding: "0",
-            border: "none",
-            boxShadow: "none",
-          }}
-        >
-          <div className="px-8 py-16 sm:px-16">
-            <div className="mx-auto max-w-xl">
-              {/* Badge — 0px radius, ivory border on dark */}
-              <div
-                className="mb-8 inline-block font-mono text-[12px] font-normal uppercase tracking-[0.04em]"
-                style={{
-                  color: "var(--surface-page-base)",
-                  border: "1px solid var(--border-on-feature-dark-strong)",
-                  borderRadius: "0px",
-                  padding: "4px 12px",
-                }}
-              >
-                Phase 1: Alpha
-              </div>
+        {/* Right: Copy & Stats */}
+        <div className="w-full md:w-2/3 flex flex-col items-start md:border-l border-[var(--border-default-subtle)] pt-8 md:pt-0 pl-0 md:pl-24">
+           <h3 className="font-sans text-[28px] md:text-[36px] font-medium leading-[1.3] mb-6" style={{ color: "var(--text-heading)" }}>
+             Coming soon.
+           </h3>
+           <p className="font-sans text-[20px] leading-[1.6] mb-16" style={{ color: "var(--text-body)", maxWidth: "560px" }}>
+             We're currently in alpha and everything is entirely free. Create unlimited projects and use real-time collaborative editing without artificial throttles while we build the most powerful browser-based IDE.
+           </p>
 
-              {/* Headline — Serif on dark surface */}
-              <h3
-                className="mb-4 font-serif font-normal"
-                style={{
-                  fontSize: "clamp(32px, 5vw, 48px)",
-                  color: "var(--surface-page-base)",
-                  lineHeight: "1.1",
-                }}
-              >
-                Pricing is coming soon.
-              </h3>
-
-              <p
-                className="mb-10 font-sans text-[16px] leading-[1.5] mx-auto"
-                style={{ color: "var(--text-on-feature-dark-subtle)", maxWidth: "420px" }}
-              >
-                We're currently in alpha and everything is free to use. Create
-                as many projects as you want, and enjoy built-in{" "}
-                <span style={{ color: "var(--surface-page-base)", fontWeight: 500 }}>
-                  collaborative editing
-                </span>{" "}
-                while we build the most powerful browser-based IDE.
-              </p>
-
-              {/* Divider */}
-              <div
-                className="mb-10 mx-auto"
-                style={{
-                  height: "1px",
-                  backgroundColor: "var(--border-on-feature-dark)",
-                  maxWidth: "300px",
-                }}
-              />
-
-              {/* Stats */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
-                <div className="text-center">
-                  <div
-                    className="font-display font-bold tracking-tight"
-                    style={{ fontSize: "40px", color: "var(--surface-page-base)" }}
-                  >
-                    $0
-                  </div>
-                  <div
-                    className="mt-2 font-mono text-[10px] uppercase tracking-[0.04em]"
-                    style={{ color: "var(--text-body-muted)" }}
-                  >
-                    Current Price
-                  </div>
-                </div>
-
-                <div
-                  className="h-10 w-px hidden sm:block"
-                  style={{ backgroundColor: "var(--border-on-feature-dark)" }}
-                />
-
-                <div className="text-center">
-                  <div
-                    className="font-display font-bold tracking-tight"
-                    style={{ fontSize: "40px", color: "var(--accent-clay)" }}
-                  >
-                    ∞
-                  </div>
-                  <div
-                    className="mt-2 font-mono text-[10px] uppercase tracking-[0.04em]"
-                    style={{ color: "var(--text-body-muted)" }}
-                  >
-                    Projects
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+           <div className="flex gap-16 md:gap-24">
+             <div className="flex flex-col">
+                <span className="font-display text-[56px] md:text-[80px] font-semibold leading-none" style={{ color: "var(--text-heading)" }}>$0</span>
+                <span className="font-mono text-[13px] uppercase tracking-[0.06em] text-[var(--text-body-muted)] mt-4">Current Price</span>
+             </div>
+             <div className="flex flex-col">
+                <span className="font-display text-[56px] md:text-[80px] font-semibold leading-none" style={{ color: "var(--accent-clay)" }}>∞</span>
+                <span className="font-mono text-[13px] uppercase tracking-[0.06em] text-[var(--text-body-muted)] mt-4">Projects Limit</span>
+             </div>
+           </div>
         </div>
+
       </div>
     </section>
   );
