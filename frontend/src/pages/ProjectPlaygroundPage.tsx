@@ -15,12 +15,19 @@ import { FolderPlus, FilePlus } from "lucide-react";
 const FileTreeSkeleton = () => (
   <div className="flex flex-col gap-3 p-4">
     {[1, 2, 3, 4, 5, 6].map((i) => (
-      <div key={i} className="flex items-center gap-2" style={{ opacity: 0.4 }}>
+      <div
+        key={i}
+        className="flex items-center gap-2 animate-pulse"
+        style={{
+          animationDelay: `${i * 100}ms`,
+        }}
+      >
         <div
           className={`h-3 ${i % 3 === 0 ? "w-3.5" : "w-4"}`}
           style={{
             backgroundColor: "var(--border-default-subtle)",
             borderRadius: "0px",
+            opacity: 0.35,
           }}
         />
         <div
@@ -28,10 +35,40 @@ const FileTreeSkeleton = () => (
           style={{
             backgroundColor: "var(--border-default-subtle)",
             borderRadius: "0px",
+            opacity: 0.35,
           }}
         />
       </div>
     ))}
+  </div>
+);
+
+const ThemeLoader = () => (
+  <div
+    className="relative flex h-14 w-14 items-center justify-center border"
+    style={{
+      borderColor: "var(--border-brand)",
+      backgroundColor: "var(--surface-page-base)",
+      borderRadius: "0px",
+    }}
+  >
+    <div
+      className="h-6 w-6 border animate-spin"
+      style={{
+        borderColor: "var(--accent-clay)",
+        borderRadius: "0px",
+        animationDuration: "3s",
+        animationDirection: "reverse",
+      }}
+    />
+    <div
+      className="absolute h-3 w-3 animate-spin"
+      style={{
+        backgroundColor: "var(--accent-clay)",
+        borderRadius: "0px",
+        animationDuration: "1.5s",
+      }}
+    />
   </div>
 );
 
@@ -44,39 +81,7 @@ const EditorSkeleton = () => (
     }}
   >
     <div className="flex flex-col items-center gap-5">
-      {/* Square icon container — 0px radius */}
-      <div
-        className="flex h-14 w-14 items-center justify-center"
-        style={{
-          backgroundColor: "var(--surface-warm-card)",
-          borderRadius: "0px",
-          border: "none",
-          boxShadow: "none",
-        }}
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ color: "var(--text-heading)" }}
-        >
-          <path
-            d="M6 8L10 12L6 16"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M13 16H18"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
+      <ThemeLoader />
       <div className="flex flex-col items-center gap-1.5 text-center">
         <span
           className="text-[15px] font-medium"
@@ -97,20 +102,75 @@ const EditorSkeleton = () => (
 
 const TerminalSkeleton = () => (
   <div
-    className="flex-1 p-4 font-mono text-[11px] leading-relaxed select-none"
-    style={{ backgroundColor: "var(--surface-feature-dark)", color: "#87867F" }}
+    className="flex h-full w-full flex-col overflow-hidden"
+    style={{ backgroundColor: "#141413" }}
   >
-    <div className="flex items-center gap-2 mb-2" style={{ color: "#87867F" }}>
-      <span
-        className="h-[3px] w-[3px]"
-        style={{ backgroundColor: "#D97757" }}
-      />
-      <span className="font-mono font-normal uppercase text-[10px] tracking-[0.04em]">
-        Bootstrapping
-      </span>
+    {/* Terminal tab bar */}
+    <div
+      className="flex h-8 shrink-0 items-center justify-between px-3"
+      style={{
+        backgroundColor: "var(--surface-elevated)",
+        borderBottom: "1px solid var(--border-default-subtle)",
+      }}
+    >
+      <div className="flex items-center gap-2">
+        <div
+          className="flex h-5 items-center gap-2 px-2"
+          style={{
+            border: "1px solid var(--border-default-subtle)",
+            borderRadius: "0px",
+            backgroundColor: "var(--surface-page-base)",
+          }}
+        >
+          <span
+            className="h-[6px] w-[6px] shrink-0"
+            style={{
+              backgroundColor: "#C6613F", // disconnected red status
+              borderRadius: "0px",
+            }}
+          />
+          <span
+            className="font-mono text-[11px] font-normal uppercase tracking-[0.04em]"
+            style={{ color: "var(--text-body-muted)" }}
+          >
+            Terminal (Connecting...)
+          </span>
+        </div>
+      </div>
     </div>
-    <div style={{ color: "rgba(250, 249, 245, 0.15)" }}>
-      Waiting for sandbox terminal socket connection...
+
+    {/* xterm content skeleton */}
+    <div
+      className="flex-1 p-4 font-mono text-[11px] leading-relaxed select-none"
+      style={{ backgroundColor: "#141413", color: "#87867F" }}
+    >
+      <div className="flex items-center gap-2 mb-3" style={{ color: "#87867F" }}>
+        <span
+          className="h-[3px] w-[3px]"
+          style={{ backgroundColor: "#D97757" }}
+        />
+        <span className="font-mono font-normal uppercase text-[10px] tracking-[0.04em]">
+          Bootstrapping
+        </span>
+      </div>
+      <div className="flex flex-col gap-1.5" style={{ color: "rgba(250, 249, 245, 0.45)" }}>
+        <div className="flex items-center gap-1.5 animate-pulse">
+          <span className="text-[#788C5D]">&gt;</span>
+          <span>Preparing build environment...</span>
+        </div>
+        <div className="flex items-center gap-1.5 animate-pulse" style={{ animationDelay: "150ms" }}>
+          <span className="text-[#87867F]">...</span>
+          <span>Loading workspace volumes...</span>
+        </div>
+        <div className="flex items-center gap-1.5 animate-pulse" style={{ animationDelay: "300ms" }}>
+          <span className="text-[#87867F]">...</span>
+          <span>Establishing secure shell tunnel...</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="text-[#FAF9F5]/40">Waiting for sandbox terminal socket connection</span>
+          <span className="inline-block w-1.5 h-3 bg-[#FAF9F5]/40 animate-blink ml-1" />
+        </div>
+      </div>
     </div>
   </div>
 );
